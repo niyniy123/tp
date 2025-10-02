@@ -319,6 +319,67 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case (UC01): Add a patient**
+
+**MSS**
+
+1. User enters the `add` command in the format add n/NAME p/PHONE a/ADDRESS i/INCOME [m/MEDICAL_INFO].
+2. System parses the command and validates input
+3. System normalizes NAME case and spaces for internal comparison and checks for duplicates using NAME+PHONE.
+4. System creates and saves the new patient record.
+5. System confirms success by displaying: Patient added: <Name> (<Phone>).
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Missing mandatory fields (n/ or p/ absent, or empty after prefix)
+
+    * 1a1. System shows "Name and phone are required fields.".
+
+    * 1a2. No patient is added.
+
+  Use case ends.
+
+* 2a. Invalid NAME (contains digits/symbols)
+    * 2a1. System shows "Invalid name format. Names may only contain letters and spaces.".
+
+    * 2a2. No patient is added.
+
+  Use case ends.
+
+* 2b. Invalid PHONE (not 8 digits after trimming):
+
+    * 2b1. System shows "Phone number must be 8 digits.".
+
+    * 2b2. No patient is added.
+
+  Use case ends.
+
+* 2c. Invalid INCOME (not numeric or < 0):
+
+    * 2c1. System shows "Income must be a non-negative number.".
+
+    * 2c2. No patient is added.
+
+  Use case ends.
+
+* 2d. Invalid input format (e.g., unrecognized/missing prefixes, duplicated prefixes or empty values):
+
+    * 2d1. System shows an appropriate input format error message, including the correct command usage and example.
+
+    * 2d2. No patient is added.
+
+  Use case ends.
+
+* 3a. Duplicate patient found (same normalized NAME and same PHONE already exist):
+
+    * 3a1. System shows "This patient already exists.".
+
+    * 3a2. No patient is added.
+
+  Use case ends.
+
 **Use case: Delete a person**
 
 **MSS**
