@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import casetrack.app.commons.exceptions.IllegalValueException;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
@@ -29,6 +31,8 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
+    private final String income;
+    private final String medicalInfo; // optional
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<String> notes = new ArrayList<>();
 
@@ -38,12 +42,16 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name,
             @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-            @JsonProperty("address") String address, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("address") String address, @JsonProperty("income") String income,
+            @JsonProperty("medicalInfo") String medicalInfo,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("notes") List<String> notes) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.income = income;
+        this.medicalInfo = medicalInfo;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -60,6 +68,8 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        income = source.getIncome().toString();
+        medicalInfo = source.getMedicalInfo() == null ? null : source.getMedicalInfo().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -118,8 +128,27 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (income == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Income.class.getSimpleName()));
+        }
+        if (!Income.isValidIncome(income)) {
+            throw new IllegalValueException(Income.MESSAGE_CONSTRAINTS);
+        }
+        final Income modelIncome = new Income(income);
+
+        final MedicalInfo modelMedicalInfo;
+        if (medicalInfo == null) {
+            modelMedicalInfo = null;
+        } else {
+            if (!MedicalInfo.isValidMedicalInfo(medicalInfo)) {
+                throw new IllegalValueException(MedicalInfo.MESSAGE_CONSTRAINTS);
+            }
+            modelMedicalInfo = new MedicalInfo(medicalInfo);
+        }
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, personNotes);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelIncome, modelMedicalInfo,
+                modelTags, personNotes);
     }
 
 }

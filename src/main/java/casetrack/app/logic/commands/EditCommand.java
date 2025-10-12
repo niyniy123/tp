@@ -23,6 +23,8 @@ import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.Model;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
@@ -100,9 +102,14 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Income updatedIncome = editPersonDescriptor.getIncome().orElse(personToEdit.getIncome());
+        MedicalInfo updatedMedicalInfo = editPersonDescriptor.isMedicalInfoEdited()
+                ? editPersonDescriptor.getMedicalInfo().orElse(null) // apply explicit null if requested
+                : personToEdit.getMedicalInfo();
 
         return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedTags, personToEdit.getNotes());
+                updatedAddress, updatedIncome, updatedMedicalInfo,
+                updatedTags, personToEdit.getNotes());
     }
 
     @Override
@@ -139,8 +146,12 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Income income;
+        private MedicalInfo medicalInfo;
+        private boolean medicalInfoEdited = false;
 
         public EditPersonDescriptor() {}
+
 
         /**
          * Copy constructor.
@@ -152,13 +163,18 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setIncome(toCopy.income);
+            if (toCopy.medicalInfoEdited) {
+                this.setMedicalInfo(toCopy.medicalInfo);
+            }
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, income)
+                    || medicalInfoEdited;
         }
 
         public void setName(Name name) {
@@ -210,6 +226,28 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setIncome(Income income) {
+            this.income = income;
+        }
+
+        public Optional<Income> getIncome() {
+            return Optional.ofNullable(income);
+        }
+
+        public void setMedicalInfo(MedicalInfo medicalInfo) {
+            this.medicalInfo = medicalInfo;
+            this.medicalInfoEdited = true;
+        }
+
+        public Optional<MedicalInfo> getMedicalInfo() {
+            // Only return a value if the field was explicitly edited
+            return medicalInfoEdited ? Optional.ofNullable(medicalInfo) : Optional.empty();
+        }
+
+        public boolean isMedicalInfoEdited() {
+            return medicalInfoEdited;
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -226,7 +264,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && medicalInfoEdited == otherEditPersonDescriptor.medicalInfoEdited
+                    && Objects.equals(medicalInfo, otherEditPersonDescriptor.medicalInfo);
         }
 
         @Override
@@ -237,6 +277,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("income", income)
+                    .add("medicalInfo", medicalInfo)
                     .toString();
         }
     }
