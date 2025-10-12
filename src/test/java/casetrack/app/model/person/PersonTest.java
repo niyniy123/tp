@@ -88,6 +88,10 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different medical info -> returns false
+        editedAlice = new PersonBuilder(ALICE).withMedicalInfo("Some condition").build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test

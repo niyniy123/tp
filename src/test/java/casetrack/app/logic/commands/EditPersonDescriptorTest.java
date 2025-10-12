@@ -19,6 +19,36 @@ import casetrack.app.testutil.EditPersonDescriptorBuilder;
 public class EditPersonDescriptorTest {
 
     @Test
+    public void isAnyFieldEdited_and_isMedicalInfoEdited() {
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        // initially false
+        assertFalse(descriptor.isAnyFieldEdited());
+        assertFalse(descriptor.isMedicalInfoEdited());
+        // set name -> now edited
+        descriptor.setName(new casetrack.app.model.person.Name("Alice"));
+        assertTrue(descriptor.isAnyFieldEdited());
+        // medical still not edited
+        assertFalse(descriptor.isMedicalInfoEdited());
+        // getMedicalInfo should be empty until explicitly edited
+        assertTrue(descriptor.getMedicalInfo().isEmpty());
+        // set medical info -> flag set and value present
+        descriptor.setMedicalInfo(new casetrack.app.model.person.MedicalInfo("Asthma"));
+        assertTrue(descriptor.isAnyFieldEdited());
+        assertTrue(descriptor.isMedicalInfoEdited());
+        assertTrue(descriptor.getMedicalInfo().isPresent());
+    }
+
+    @Test
+    public void getTags_returnsUnmodifiableSet() {
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        java.util.Set<casetrack.app.model.tag.Tag> tags = new java.util.HashSet<>();
+        tags.add(new casetrack.app.model.tag.Tag("friends"));
+        descriptor.setTags(tags);
+        java.util.Set<casetrack.app.model.tag.Tag> returned = descriptor.getTags().get();
+        casetrack.app.testutil.Assert.assertThrows(UnsupportedOperationException.class, () -> returned.add(new casetrack.app.model.tag.Tag("new")));
+    }
+
+    @Test
     public void equals() {
         // same values -> returns true
         EditPersonDescriptor descriptorWithSameValues = new EditPersonDescriptor(DESC_AMY);

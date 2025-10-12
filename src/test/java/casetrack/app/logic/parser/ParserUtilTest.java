@@ -26,6 +26,9 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_INCOME = "-100";
+    private static final String INVALID_NOTE = "   ";
+    private static final String INVALID_MEDICAL = " ";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -33,6 +36,9 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_INCOME = "5000";
+    private static final String VALID_NOTE = "Follow-up in 2 weeks";
+    private static final String VALID_MEDICAL = "Asthma";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -192,5 +198,53 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseIncome_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseIncome(null));
+    }
+
+    @Test
+    public void parseIncome_invalid_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseIncome(INVALID_INCOME));
+    }
+
+    @Test
+    public void parseIncome_valid_trimsAndParses() throws Exception {
+        String withWs = WHITESPACE + VALID_INCOME + WHITESPACE;
+        assertEquals(new casetrack.app.model.person.Income(VALID_INCOME), ParserUtil.parseIncome(withWs));
+    }
+
+    @Test
+    public void parseMedicalInfo_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseMedicalInfo(null));
+    }
+
+    @Test
+    public void parseMedicalInfo_invalid_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseMedicalInfo(INVALID_MEDICAL));
+    }
+
+    @Test
+    public void parseMedicalInfo_valid_trimsAndParses() throws Exception {
+        String withWs = WHITESPACE + VALID_MEDICAL + WHITESPACE;
+        assertEquals(new casetrack.app.model.person.MedicalInfo(VALID_MEDICAL), ParserUtil.parseMedicalInfo(withWs));
+    }
+
+    @Test
+    public void parseNote_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseNote(null));
+    }
+
+    @Test
+    public void parseNote_invalid_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseNote(INVALID_NOTE));
+    }
+
+    @Test
+    public void parseNote_valid_trimsAndParses() throws Exception {
+        String withWs = WHITESPACE + VALID_NOTE + WHITESPACE;
+        assertEquals(new casetrack.app.model.person.Note(VALID_NOTE), ParserUtil.parseNote(withWs));
     }
 }

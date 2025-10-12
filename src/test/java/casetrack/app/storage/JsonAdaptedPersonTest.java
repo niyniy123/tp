@@ -113,6 +113,40 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
+    public void toModelType_invalidIncome_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, "-10", VALID_MEDICAL_INFO, VALID_TAGS, VALID_NOTES);
+        String expectedMessage = casetrack.app.model.person.Income.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullIncome_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, null, VALID_MEDICAL_INFO, VALID_TAGS, VALID_NOTES);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                casetrack.app.model.person.Income.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidMedicalInfo_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, " ", VALID_TAGS, VALID_NOTES);
+        String expectedMessage = casetrack.app.model.person.MedicalInfo.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullMedicalInfo_success() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_INCOME, null, VALID_TAGS, VALID_NOTES);
+        Person model = person.toModelType();
+        // medical info should be null
+        assertEquals(null, model.getMedicalInfo());
+    }
+
+    @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
