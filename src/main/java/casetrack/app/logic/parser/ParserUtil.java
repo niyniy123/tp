@@ -11,6 +11,8 @@ import casetrack.app.commons.util.StringUtil;
 import casetrack.app.logic.parser.exceptions.ParseException;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Phone;
@@ -137,5 +139,35 @@ public class ParserUtil {
             throw new ParseException(Note.MESSAGE_CONSTRAINTS);
         }
         return new Note(trimmedNote);
+    }
+
+    /**
+     * Parses a {@code String income} into an {@code Income}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code income} is invalid.
+     */
+    public static Income parseIncome(String income) throws ParseException {
+        requireNonNull(income);
+        String trimmed = income.trim();
+        if (!Income.isValidIncome(trimmed)) {
+            throw new ParseException(Income.MESSAGE_CONSTRAINTS);
+        }
+        return new Income(trimmed);
+    }
+
+    /**
+     * Parses a {@code String medicalInfo} into a {@code MedicalInfo}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code medicalInfo} is empty after trimming or invalid.
+     */
+    public static MedicalInfo parseMedicalInfo(String medicalInfo) throws ParseException {
+        requireNonNull(medicalInfo);
+        String trimmed = medicalInfo.trim();
+        if (!MedicalInfo.isValidMedicalInfo(trimmed)) {
+            throw new ParseException(MedicalInfo.MESSAGE_CONSTRAINTS);
+        }
+        return new MedicalInfo(trimmed);
     }
 }
