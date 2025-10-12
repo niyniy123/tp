@@ -46,7 +46,6 @@ import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
-import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.tag.Tag;
 import casetrack.app.testutil.PersonBuilder;
 

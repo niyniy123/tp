@@ -45,7 +45,8 @@ public class EditPersonDescriptorTest {
         tags.add(new casetrack.app.model.tag.Tag("friends"));
         descriptor.setTags(tags);
         java.util.Set<casetrack.app.model.tag.Tag> returned = descriptor.getTags().get();
-        casetrack.app.testutil.Assert.assertThrows(UnsupportedOperationException.class, () -> returned.add(new casetrack.app.model.tag.Tag("new")));
+        casetrack.app.testutil.Assert.assertThrows(
+                UnsupportedOperationException.class, () -> returned.add(new casetrack.app.model.tag.Tag("new")));
     }
 
     @Test
