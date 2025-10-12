@@ -97,4 +97,64 @@ public class PersonTest {
                 + ", notes=" + ALICE.getNotes() + "}";
         assertEquals(expected, ALICE.toString());
     }
+
+    @Test
+    public void getNotes_modifyList_throwsUnsupportedOperationException() {
+        Person person = new PersonBuilder().build();
+        assertThrows(UnsupportedOperationException.class, () -> person.getNotes().remove(0));
+    }
+
+    @Test
+    public void addNote() {
+        Person person = new PersonBuilder().build();
+        Note note = new Note("Test note");
+        Person personWithNote = person.addNote(note);
+
+        assertTrue(person.getNotes().isEmpty());
+
+        // new person have the note
+        assertFalse(personWithNote.getNotes().isEmpty());
+        assertEquals(1, personWithNote.getNotes().size());
+        assertEquals(note, personWithNote.getNotes().get(0));
+    }
+
+    @Test
+    public void removeNote() {
+        Note note1 = new Note("First note");
+        Note note2 = new Note("Second note");
+        Person person = new PersonBuilder()
+                .withNotes(note1, note2)
+                .build();
+
+        Person personRemoved = person.removeNote(0);
+
+        // original person should not be modified
+        assertEquals(2, person.getNotes().size());
+        assertEquals(note1, person.getNotes().get(0));
+        assertEquals(note2, person.getNotes().get(1));
+
+        // new person should have one note removed
+        assertEquals(1, personRemoved.getNotes().size());
+        assertEquals(note2, personRemoved.getNotes().get(0));
+    }
+
+    @Test
+    public void removeNote_middleNote() {
+        Note note1 = new Note("First note");
+        Note note2 = new Note("Second note");
+        Note note3 = new Note("Third note");
+        Person person = new PersonBuilder()
+                .withNotes(note1, note2, note3)
+                .build();
+
+        // remove middle note
+        Person personRemoved = person.removeNote(1);
+
+        // original person should not be modified
+        assertEquals(3, person.getNotes().size());
+
+        assertEquals(2, personRemoved.getNotes().size());
+        assertEquals(note1, personRemoved.getNotes().get(0));
+        assertEquals(note3, personRemoved.getNotes().get(1));
+    }
 }

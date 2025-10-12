@@ -96,6 +96,15 @@ public class Person {
     }
 
     /**
+     * Returns a new Person with the note at the specified index removed from the notes list.
+     */
+    public Person removeNote(int noteIndex) {
+        List<Note> updatedNotes = new ArrayList<>(notes);
+        updatedNotes.remove(noteIndex);
+        return new Person(name, phone, email, address, new HashSet<>(tags), updatedNotes);
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */

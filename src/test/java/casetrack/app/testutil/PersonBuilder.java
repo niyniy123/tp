@@ -1,11 +1,14 @@
 package casetrack.app.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
 import casetrack.app.model.person.Name;
+import casetrack.app.model.person.Note;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
 import casetrack.app.model.tag.Tag;
@@ -26,6 +29,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private List<Note> notes;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -36,6 +40,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        notes = new ArrayList<>();
     }
 
     /**
@@ -47,6 +52,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        notes = new ArrayList<>(personToCopy.getNotes());
     }
 
     /**
@@ -89,8 +95,27 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Notes} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withNotes(Note... notes) {
+        this.notes.clear();
+        for (Note note : notes) {
+            this.notes.add(note);
+        }
+        return this;
+    }
+
+    /**
+     * Builds a Person object with the specified details.
+     * @return a Person object with the configuration
+     */
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        if (notes.isEmpty()) {
+            return new Person(name, phone, email, address, tags);
+        } else {
+            return new Person(name, phone, email, address, tags, notes);
+        }
     }
 
 }
