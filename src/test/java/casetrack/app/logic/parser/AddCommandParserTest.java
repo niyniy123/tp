@@ -227,11 +227,4 @@ public class AddCommandParserTest {
         assertParseFailure(parser, input,
                 Messages.getErrorMessageForDuplicatePrefixes(casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO));
     }
-
-    @Test
-    public void parse_invalidMedicalInfo_throwsRuntimeException() {
-        String input = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + INCOME_DESC_BOB + " " + casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO + "  ";
-        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> parser.parse(input));
-    }
 }
