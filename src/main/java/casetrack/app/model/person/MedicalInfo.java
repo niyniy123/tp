@@ -27,8 +27,9 @@ public class MedicalInfo {
      */
     public MedicalInfo(String medicalInfo) {
         requireNonNull(medicalInfo);
-        checkArgument(isValidMedicalInfo(medicalInfo), MESSAGE_CONSTRAINTS);
-        this.medicalInfo = medicalInfo;
+        String trimmed = medicalInfo.trim();
+        checkArgument(isValidMedicalInfo(trimmed), MESSAGE_CONSTRAINTS);
+        this.medicalInfo = trimmed;
     }
 
     /**
