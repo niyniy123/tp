@@ -30,6 +30,7 @@ import static casetrack.app.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_INCOME;
+import static casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_NAME;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_PHONE;
 import static casetrack.app.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -43,6 +44,8 @@ import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.AddCommand;
 import casetrack.app.model.person.Address;
 import casetrack.app.model.person.Email;
+import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.model.person.Name;
 import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Phone;
@@ -225,6 +228,35 @@ public class AddCommandParserTest {
         String base = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INCOME_DESC_BOB;
         String input = base + MEDICAL_INFO_DESC_BOB + MEDICAL_INFO_DESC_BOB;
         assertParseFailure(parser, input,
-                Messages.getErrorMessageForDuplicatePrefixes(casetrack.app.logic.parser.CliSyntax.PREFIX_MEDICAL_INFO));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_MEDICAL_INFO));
+    }
+
+    @Test
+    public void parse_emptyMedicalInfo_failure() {
+        // Empty medical info after prefix should fail
+        String input = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + INCOME_DESC_BOB + " " + PREFIX_MEDICAL_INFO + "";
+        assertParseFailure(parser, input, MedicalInfo.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_whitespaceMedicalInfo_failure() {
+        // Whitespace-only medical info should fail
+        String input = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + INCOME_DESC_BOB + " " + PREFIX_MEDICAL_INFO + "   ";
+        assertParseFailure(parser, input, MedicalInfo.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidIncome_failure() {
+        // Test negative income
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + ADDRESS_DESC_BOB + " " + PREFIX_INCOME + "-100",
+                Income.MESSAGE_CONSTRAINTS);
+
+        // Test non-numeric income
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + ADDRESS_DESC_BOB + " " + PREFIX_INCOME + "abc",
+                Income.MESSAGE_CONSTRAINTS);
     }
 }

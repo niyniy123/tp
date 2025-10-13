@@ -25,6 +25,8 @@ import casetrack.app.model.Model;
 import casetrack.app.model.ModelManager;
 import casetrack.app.model.UserPrefs;
 import casetrack.app.model.person.Person;
+import casetrack.app.model.person.Income;
+import casetrack.app.model.person.MedicalInfo;
 import casetrack.app.testutil.EditPersonDescriptorBuilder;
 import casetrack.app.testutil.PersonBuilder;
 
@@ -144,6 +146,52 @@ public class EditCommandTest {
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+    
+    @Test
+    public void execute_editIncomeOnly_success() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setIncome(new Income("5000"));
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        Person editedPerson = new PersonBuilder(personToEdit).withIncome("5000").build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_clearMedicalInfo_success() {
+        // Add a person with medical info to the model
+        Person personWithMedicalInfo = new PersonBuilder()
+                .withMedicalInfo("Diabetes").build();
+        model.addPerson(personWithMedicalInfo);
+
+        // Prepare descriptor to explicitly clear medical info
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setMedicalInfo(null);  // Explicitly clear to null
+
+        // Target the last person (just added)
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
+        EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
+
+        // Expected person should have null medical info
+        Person editedPerson = new PersonBuilder(personWithMedicalInfo)
+                .withMedicalInfo().build();  // null medical info
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personWithMedicalInfo, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
