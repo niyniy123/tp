@@ -51,18 +51,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Income income = ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME).get());
-        Optional<MedicalInfo> medicalInfo = argMultimap.getValue(PREFIX_MEDICAL_INFO)
-                .map(s -> {
-                    try {
-                        return ParserUtil.parseMedicalInfo(s);
-                    } catch (ParseException e) {
-                        // rethrow as unchecked to satisfy functional interface, will be handled below if needed
-                        throw new RuntimeException(e);
-                    }
-                });
+        MedicalInfo medicalInfo = null;
+        if (argMultimap.getValue(PREFIX_MEDICAL_INFO).isPresent()) {
+            medicalInfo = ParserUtil.parseMedicalInfo(argMultimap.getValue(PREFIX_MEDICAL_INFO).get());
+        }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, income, medicalInfo.orElse(null), tagList);
+        Person person = new Person(name, phone, email, address, income, medicalInfo, tagList);
 
         return new AddCommand(person);
     }
