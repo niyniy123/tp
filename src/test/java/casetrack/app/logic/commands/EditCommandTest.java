@@ -24,9 +24,8 @@ import casetrack.app.model.AddressBook;
 import casetrack.app.model.Model;
 import casetrack.app.model.ModelManager;
 import casetrack.app.model.UserPrefs;
-import casetrack.app.model.person.Person;
 import casetrack.app.model.person.Income;
-import casetrack.app.model.person.MedicalInfo;
+import casetrack.app.model.person.Person;
 import casetrack.app.testutil.EditPersonDescriptorBuilder;
 import casetrack.app.testutil.PersonBuilder;
 
@@ -147,7 +146,6 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
-    
     @Test
     public void execute_editIncomeOnly_success() {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -175,7 +173,7 @@ public class EditCommandTest {
 
         // Prepare descriptor to explicitly clear medical info
         EditPersonDescriptor descriptor = new EditPersonDescriptor();
-        descriptor.setMedicalInfo(null);  // Explicitly clear to null
+        descriptor.setMedicalInfo(null);
 
         // Target the last person (just added)
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
@@ -183,7 +181,7 @@ public class EditCommandTest {
 
         // Expected person should have null medical info
         Person editedPerson = new PersonBuilder(personWithMedicalInfo)
-                .withMedicalInfo().build();  // null medical info
+                .withMedicalInfo().build();
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.format(editedPerson));
