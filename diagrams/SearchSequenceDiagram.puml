@@ -1,0 +1,95 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindCommandParser" as FindCommandParser LOGIC_COLOR
+participant "p:PhoneContainsKeywordsPredicate" as Predicate LOGIC_COLOR
+participant "f:FindCommand" as FindCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("search number +6591234567")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("search number +6591234567")
+activate AddressBookParser
+
+create FindCommandParser
+AddressBookParser -> FindCommandParser
+activate FindCommandParser
+
+FindCommandParser --> AddressBookParser
+deactivate FindCommandParser
+
+AddressBookParser -> FindCommandParser : parse("number +6591234567")
+activate FindCommandParser
+
+FindCommandParser -> FindCommandParser : subcommand("number", ["+6591234567"])
+activate FindCommandParser
+
+create Predicate
+FindCommandParser -> Predicate : new PhoneContainsKeywordsPredicate(["+6591234567"])
+activate Predicate
+
+Predicate --> FindCommandParser
+deactivate Predicate
+
+FindCommandParser --> FindCommandParser : p
+deactivate FindCommandParser
+
+create FindCommand
+FindCommandParser -> FindCommand : new FindCommand(p)
+activate FindCommand
+
+FindCommand --> FindCommandParser
+deactivate FindCommand
+
+FindCommandParser --> AddressBookParser : f
+deactivate FindCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+FindCommandParser -[hidden]-> AddressBookParser
+destroy FindCommandParser
+
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+
+LogicManager -> FindCommand : execute(m)
+activate FindCommand
+
+FindCommand -> Model : updateFilteredPersonList(p)
+activate Model
+
+Model -> Predicate : test(person)
+activate Predicate
+note right
+  Validates if keyword is valid phone
+  and checks if person's phone
+  contains the country code
+end note
+
+Predicate --> Model : true/false
+deactivate Predicate
+
+Model --> FindCommand
+deactivate Model
+
+create CommandResult
+FindCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> FindCommand
+deactivate CommandResult
+
+FindCommand --> LogicManager : r
+deactivate FindCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
