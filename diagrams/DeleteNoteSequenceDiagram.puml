@@ -1,0 +1,80 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
+participant "dn:DeleteNoteCommand" as DeleteNoteCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "p:Person" as Person MODEL_COLOR
+end box
+
+[-> LogicManager : execute("delete note 1 2")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("delete note 1 2")
+activate AddressBookParser
+
+create DeleteCommandParser
+AddressBookParser -> DeleteCommandParser
+activate DeleteCommandParser
+
+DeleteCommandParser --> AddressBookParser
+deactivate DeleteCommandParser
+
+AddressBookParser -> DeleteCommandParser : parse("note 1 2")
+activate DeleteCommandParser
+
+create DeleteNoteCommand
+DeleteCommandParser -> DeleteNoteCommand
+activate DeleteNoteCommand
+
+DeleteNoteCommand --> DeleteCommandParser :
+deactivate DeleteNoteCommand
+
+DeleteCommandParser --> AddressBookParser : dn
+deactivate DeleteCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+DeleteCommandParser -[hidden]-> AddressBookParser
+destroy DeleteCommandParser
+
+AddressBookParser --> LogicManager : dn
+deactivate AddressBookParser
+
+LogicManager -> DeleteNoteCommand : execute(m)
+activate DeleteNoteCommand
+
+DeleteNoteCommand -> Model : getFilteredPersonList()
+activate Model
+Model --> DeleteNoteCommand : List<Person>
+deactivate Model
+
+DeleteNoteCommand -> Person : removeNote(noteIndex)
+activate Person
+Person --> DeleteNoteCommand : updatedPerson
+deactivate Person
+
+DeleteNoteCommand -> Model : setPerson(personToUpdate, updatedPerson)
+activate Model
+Model --> DeleteNoteCommand
+deactivate Model
+
+create CommandResult
+DeleteNoteCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> DeleteNoteCommand
+deactivate CommandResult
+
+DeleteNoteCommand --> LogicManager : r
+deactivate DeleteNoteCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

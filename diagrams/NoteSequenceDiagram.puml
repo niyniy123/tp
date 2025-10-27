@@ -1,0 +1,112 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":NoteCommandParser" as NoteCommandParser LOGIC_COLOR
+participant "note:Note" as Note LOGIC_COLOR
+participant "nc:NoteCommand" as NoteCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+end box
+
+[-> LogicManager : execute("note 1 t/Follow-up needed")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("note 1 t/Follow-up needed")
+activate AddressBookParser
+
+create NoteCommandParser
+AddressBookParser -> NoteCommandParser
+activate NoteCommandParser
+
+NoteCommandParser --> AddressBookParser
+deactivate NoteCommandParser
+
+AddressBookParser -> NoteCommandParser : parse("1 t/Follow-up needed")
+activate NoteCommandParser
+
+NoteCommandParser -> NoteCommandParser : tokenize arguments
+activate NoteCommandParser
+note right
+  Extracts index (1) and
+  note text ("Follow-up needed")
+end note
+
+NoteCommandParser --> NoteCommandParser
+deactivate NoteCommandParser
+
+create Note
+NoteCommandParser -> Note : new Note("Follow-up needed")
+activate Note
+
+Note --> NoteCommandParser : note
+deactivate Note
+
+create NoteCommand
+NoteCommandParser -> NoteCommand : new NoteCommand(index, note)
+activate NoteCommand
+
+NoteCommand --> NoteCommandParser : nc
+deactivate NoteCommand
+
+NoteCommandParser --> AddressBookParser : nc
+deactivate NoteCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+NoteCommandParser -[hidden]-> AddressBookParser
+destroy NoteCommandParser
+
+AddressBookParser --> LogicManager : nc
+deactivate AddressBookParser
+
+LogicManager -> NoteCommand : execute(m)
+activate NoteCommand
+
+NoteCommand -> Model : getFilteredPersonList()
+activate Model
+
+Model --> NoteCommand : personList
+deactivate Model
+
+NoteCommand -> NoteCommand : findPerson(m)
+activate NoteCommand
+note right
+  Validates index is within bounds
+  and retrieves person at index
+end note
+
+NoteCommand --> NoteCommand : personToUpdate
+deactivate NoteCommand
+
+NoteCommand -> Person : addNote(note)
+activate Person
+
+Person --> NoteCommand : updatedPerson
+deactivate Person
+
+NoteCommand -> Model : setPerson(personToUpdate, updatedPerson)
+activate Model
+
+Model --> NoteCommand
+deactivate Model
+
+create CommandResult
+NoteCommand -> CommandResult : new CommandResult(message, updatedPerson, false, false)
+activate CommandResult
+
+CommandResult --> NoteCommand : r
+deactivate CommandResult
+
+NoteCommand --> LogicManager : r
+deactivate NoteCommand
+
+[<--LogicManager : r
+deactivate LogicManager
+@enduml
+

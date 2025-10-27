@@ -18,6 +18,8 @@ Class Address
 Class Email
 Class Name
 Class Phone
+Class Income
+Class MedicalInfo
 Class Tag
 
 Class I #FFFFFF
@@ -41,6 +43,8 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> Income
+Person *--> MedicalInfo
 Person *--> "*" Tag
 
 Person -[hidden]up--> I
