@@ -752,6 +752,7 @@ Use case ends.
 
 **Performance Requirements:**
 Should be able to store and retrieve up to 10,000 patient records with the following performance requirements:
+
 3. Initial application startup and data load: < 1 minute on modern hardware (M2 Pro MacBook or equivalent)
 4. Search and filter operations: < 3 seconds to display results
 5. Individual record operations (add/edit/delete): < 1 second
