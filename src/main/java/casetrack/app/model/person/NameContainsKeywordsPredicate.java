@@ -3,7 +3,6 @@ package casetrack.app.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import casetrack.app.commons.util.StringUtil;
 import casetrack.app.commons.util.ToStringBuilder;
 
 /**
@@ -19,7 +18,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> person.getName().fullName.toLowerCase().contains(keyword.toLowerCase()));
     }
 
     @Override

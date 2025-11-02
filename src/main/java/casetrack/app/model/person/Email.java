@@ -9,7 +9,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Email {
 
-    private static final String SPECIAL_CHARACTERS = "+_.-";
+    private static final String SPECIAL_CHARACTERS = "/=+_.-";
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "

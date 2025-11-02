@@ -272,7 +272,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | User                                        | list all patients at once    | browse patient records easily and get an overview of my caseload      |
 | `* * *`  | User                                        | delete patient records        | clean up patient records when they are no longer relevant or cases are closed |
 | `* * *`  | New User                                    | see usage instructions and command help | refer to instructions when I forget how to use the app |
-| `* *`     | Social Worker                               | filter patients by attributes (medical condition, income level, name) | get information about my patients quickly during sessions |
+| `* *`     | Social Worker                               | filter patients by a single attribute (name, number, email, or tag) | get information about my patients quickly during sessions |
 | `* *`     | Social Worker                               | take quick notes during or right after a session, even with incomplete data | capture important context immediately and avoid forgetting key details later |
 | `* *`     | Social Worker                               | enter partial patient details and still retrieve useful results | still access key patient information even when the data I have is incomplete |
 | `* *`     | Social Worker                               | tag and categorize patients based on needs | prioritize cases and follow up more systematically |
@@ -406,59 +406,41 @@ Use case ends.
   Use case ends.
 
 
-#### Use case (UC04): Search/Filter Patients
+#### Use case (UC04): Search Patients
 
 **MSS**
 
-1. User enters the `search` command with one or more filter attributes (name, condition, and/or income).
+1. User enters the `search` command with a single filter attribute (name, number, email, or tag) and one or more keywords.
 2. System parses the command and validates input parameters.
 3. System filters the patient list based on the provided criteria.
-4. System displays all matching patient records showing name, condition, and income.
+4. System displays all matching patient records.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. No attributes specified (empty search command).
+* 1a. No field or keywords specified (empty search command).
 
     * 1a1. System shows an error message.
 
       Use case ends.
 
-* 2a. Invalid name format (contains non-alphabetic characters except spaces and hyphens).
+* 2a. Invalid field specified (not name, number, email, or tag).
 
     * 2a1. System shows an error message.
 
       Use case ends.
 
-* 2b. Invalid condition format (contains non-alphabetic characters except spaces and hyphens).
+* 2b. No keywords provided after field specification.
 
     * 2b1. System shows an error message.
 
       Use case ends.
 
-* 2c. Invalid income format (not a positive number, contains commas or currency symbols).
-
-    * 2c1. System shows an error message.
-
-      Use case ends.
-
-* 2d. Unrecognized attribute prefix (e.g., age/, city/).
-
-    * 2d1. System shows an error message.
-
-      Use case ends.
-
-* 2e. Empty attribute value (e.g., name/, condition/, income/).
-
-    * 2e1. System shows error for the specific empty attribute.
-
-      Use case ends.
-
 * 3a. No patients match the search criteria.
 
-    * 3a1. System informs the User that there are no patients available.
-    
+    * 3a1. System informs the User that no patients match the search criteria.
+
       Use case ends.
 
 * *a. At any time, User cancels the action.
@@ -726,14 +708,89 @@ Use case ends.
 
   Use case ends.
 
+#### Use case (UC10): View patient details
+
+**Preconditions**
+* At least one patient is listed in the current view.
+
+**Guarantees**
+* Patient details will only be displayed if a valid patient index is provided.
+* Invalid inputs will not modify any patient data.
+
+**MSS**
+1. User requests to list patients.
+2. System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
+3. User requests to view details of a specific patient.
+4. System displays the patient details.
+5. System confirms by displaying a success message.
+
+   Use case ends.
+
+**Extensions**
+* 3a. The patient index is invalid.
+
+    * 3a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3b. No patient index is provided.
+
+    * 3b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* *a. At any time, User cancels the action.
+
+  Use case ends.
+
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java `17` or above installed.
-2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
+2. Should be able to store and retrieve up to 10,000 patient records with the following performance requirements:
+    - Initial application startup and data load: < 1 minute on modern hardware (M2 Pro MacBook or equivalent)
+    - Search and filter operations: < 3 seconds to display results
+    - Individual record operations (add/edit/delete): < 1 second
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
-6. The application's target market in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
+6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
+7. The application's target market in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
+
+
+### Security and Privacy Considerations
+
+**Data Storage**
+
+CaseTrack stores all patient data in plaintext JSON at `data/casetrack.json`. This includes names, phone numbers, addresses, income, and medical information. No encryption is provided - this keeps the implementation simple and data recoverable.
+
+**Regulatory Compliance**
+
+Patient data falls under Singapore's PDPA and [PDPC Advisory Guidelines for the Healthcare Sector](https://www.pdpc.gov.sg/guidelines-and-consultation/2017/10/advisory-guidelines-for-the-healthcare-sector). To comply, deploy CaseTrack only in secure environments:
+
+1. **Network Isolation**: Use on systems with no internet access or isolated internal networks.
+
+2. **Physical Security**: Install on computers in locked, access-controlled areas.
+
+3. **Access Controls**: 
+   - Require strong authentication (passwords, biometrics)
+   - Set file permissions to restrict `casetrack.json` access
+   - Enable automatic screen locking
+
+4. **Data Handling**:
+   - Establish data retention and deletion policies
+   - Store backups securely
+   - Train staff on data protection
+   - Maintain access logs where possible
+
+**What CaseTrack Does NOT Provide**
+
+- Data encryption
+- User authentication
+- Audit logging
+- Network security features
+
+Organizations must provide these through their IT infrastructure and policies.
+
 
 ### Glossary
 

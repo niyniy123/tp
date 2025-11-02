@@ -37,6 +37,7 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
                     EditNoteCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NOTE_TEXT);
         Index patientIndex;
         Index noteIndex;
         Note newNote;
