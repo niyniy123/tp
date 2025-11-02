@@ -710,13 +710,41 @@ Use case ends.
 
 ### Non-Functional Requirements
 
+**Environment Requirements:**
+
 1. Should work on any 64-bit mainstream OS (Windows, Linux, Unix, MacOS) as long as it has Java `17` or above installed.
-2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
-3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
-4. Healthcare helpers with basic CLI literacy (comfortable with typing commands and reading command-line feedback) should be able to perform common tasks (add, search, update patient records) within 10 minutes of initial training with the user guide.
-5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
-6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
-7. The application should be usable on screens with a minimum resolution of 1280x720 pixels. For optimal viewing experience, a resolution of 1920x1080 or higher is recommended.
+2. The application should be usable on screens with a minimum resolution of 1280x720 pixels. For optimal viewing experience, a resolution of 1920x1080 or higher is recommended.
+
+**Performance Requirements:**
+
+3. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
+4. Create, update, and delete operations on patient records should complete within 3 seconds.
+5. The application startup time should not exceed 5 seconds on systems meeting the minimum requirements.
+
+**Quality and Usability Requirements:**
+
+6. Healthcare helpers with basic CLI literacy (comfortable with typing commands and reading command-line feedback) should be able to perform common tasks (add, search, update patient records) within 10 minutes of initial training with the user guide.
+7. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+8. The system should provide clear, actionable error messages for all invalid inputs, specifying what was wrong and how to correct it.
+
+**Data Requirements:**
+
+9. All patient data must be stored in a human-readable format (JSON) that advanced users can manually edit if necessary. However, the application is not required to reflect changes made directly to the data file in the GUI while the app is running.
+10. The system must automatically save all changes to persistent storage immediately after each successful operation to prevent data loss.
+
+**Reliability and Robustness:**
+
+11.  The system should handle corrupted data files gracefully by offering to start with an empty dataset rather than crashing.
+12.  The system should validate all user inputs and reject invalid data without corrupting the existing dataset.
+
+**Security and Privacy Requirements:**
+
+13. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
+14. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
+
+**Constraints:**
+
+15.  The product is not required to handle concurrent access by multiple users or support multi-user authentication.
 
 ### Security and Privacy Considerations
 
