@@ -756,7 +756,6 @@ Use case ends.
 6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
 7. Only English is supported, as the application targets users in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
 
-
 ### Security and Privacy Considerations
 
 **Data Storage**
