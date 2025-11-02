@@ -208,9 +208,24 @@ Format: `search FIELD KEYWORD [MORE_KEYWORDS]`
 * **Email search**: Partial matches are supported. e.g. `alice` will match `alice@example.com`
 * **Tag search**: Partial matches are supported. e.g. `friend` will match tags like `friendly` or `best-friend`
 
+<box type="warning" seamless>
+
+**Important Note on Multiple Search Values (number, email, tag):**
+For `number`, `email`, and `tag` searches, multiple keywords are treated as separate search terms with OR logic. This can cause unexpected results:
+* `search number 2 1` searches for numbers containing "2" OR "1" separately (won't find "21 98765432" as intended)
+* `search number 21` searches for numbers containing "21" as a sequence (correctly finds "21 98765432")
+
+To search for a specific sequence or value in these fields, provide it as a single keyword without spaces.
+
+**Note:** Name search works differently - multiple keywords are useful for finding different people (e.g., `search name John David` finds anyone named John OR David).
+
+</box>
+
 Examples:
 * `search name John` returns `john` and `John Doe` (full word match)
 * `search name alex david` returns `Alex Yeoh`, `David Li`
+* `search number +65` returns patients with phone number containing `+65` (e.g. `+6598765432`)
+![example showing search by country code](images/searchNumberOnCountryCode.png)
 * `search number 9123` returns patients with phone number containing `9123` (e.g. `91234567`)
 ![example showing search by phone number](images/searchByPhoneNumberExample.png)
 
@@ -252,6 +267,12 @@ Format: `view <PATIENT_INDEX>`
 * View details of the patient at the specified `<PATIENT_INDEX>`.
 * The index refers to the index number shown in the displayed patient list.
 * The index must be a positive integer 1, 2, 3, …​
+
+<box type="info" seamless>
+
+**Note:** The `view` command works with any currently displayed patient list. You can use `view` with the patient index, which allows you to quickly view patient details entirely through keyboard commands.
+
+</box>
 
 Examples:
 * `list` followed by `view 2` shows details for the 2nd patient in CaseTrack.

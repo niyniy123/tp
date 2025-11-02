@@ -708,6 +708,41 @@ Use case ends.
 
   Use case ends.
 
+#### Use case (UC10): View patient details
+
+**Preconditions**
+* At least one patient is listed in the current view.
+
+**Guarantees**
+* Patient details will only be displayed if a valid patient index is provided.
+* Invalid inputs will not modify any patient data.
+
+**MSS**
+1. User requests to list patients.
+2. System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
+3. User requests to view details of a specific patient.
+4. System displays the patient details.
+5. System confirms by displaying a success message.
+
+   Use case ends.
+
+**Extensions**
+* 3a. The patient index is invalid.
+
+    * 3a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3b. No patient index is provided.
+
+    * 3b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* *a. At any time, User cancels the action.
+
+  Use case ends.
+
 ### Non-Functional Requirements
 
 **Environment Requirements:**
@@ -716,10 +751,10 @@ Use case ends.
 2. The application should be usable on screens with a minimum resolution of 1280x720 pixels. For optimal viewing experience, a resolution of 1920x1080 or higher is recommended.
 
 **Performance Requirements:**
-
-3. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
-4. Create, update, and delete operations on patient records should complete within 3 seconds.
-5. The application startup time should not exceed 5 seconds on systems meeting the minimum requirements.
+Should be able to store and retrieve up to 10,000 patient records with the following performance requirements:
+3. Initial application startup and data load: < 1 minute on modern hardware (M2 Pro MacBook or equivalent)
+4. Search and filter operations: < 3 seconds to display results
+5. Individual record operations (add/edit/delete): < 1 second
 
 **Quality and Usability Requirements:**
 
