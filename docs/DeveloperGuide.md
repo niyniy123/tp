@@ -710,12 +710,13 @@ Use case ends.
 
 ### Non-Functional Requirements
 
-1. Should work on any mainstream OS as long as it has Java `17` or above installed.
+1. Should work on any 64-bit mainstream OS (Windows, Linux, Unix, MacOS) as long as it has Java `17` or above installed.
 2. Should be able to store and retrieve up to 10,000 patient records without noticeable delay (< 3 seconds for search operations).
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
-4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
+4. Healthcare helpers with basic CLI literacy (comfortable with typing commands and reading command-line feedback) should be able to perform common tasks (add, search, update patient records) within 10 minutes of initial training with the user guide.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
 6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
+7. The application should be usable on screens with a minimum resolution of 1280x720 pixels. For optimal viewing experience, a resolution of 1920x1080 or higher is recommended.
 
 ### Security and Privacy Considerations
 
@@ -756,7 +757,7 @@ Organizations must provide these through their IT infrastructure and policies.
 
 | Term | Definition |
 |------|------------|
-| **Mainstream OS** | Windows, Linux, Unix, MacOS |
+| **Mainstream OS** | 64-bit versions of Windows, Linux, Unix, MacOS |
 | **Patient Record** | A data entry with a patient's name, phone, address, income, medical info, and notes|
 | **Quick Note** | A brief text annotation attached to a patient record, typically captured during or immediately after a session |
 | **Session** | A meeting or consultation between a social worker and a patient |
@@ -764,6 +765,7 @@ Organizations must provide these through their IT infrastructure and policies.
 | **Medical Information** | Health-related details about a patient including conditions, medications, or treatment notes |
 | **Partial Data** | Incomplete patient information, common during initial visits or when full details are not available |
 | **Prefix** | Command parameter identifiers (e.g., n/ for name, p/ for phone) used in the CLI syntax |
+| **CLI Literacy** | Familiarity with command-line interfaces, including the ability to type commands, understand command syntax with prefixes, and interpret text-based feedback |
 
 --------------------------------------------------------------------------------------------------------------------
 
