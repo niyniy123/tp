@@ -733,7 +733,7 @@ Use case ends.
 3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
-6. The application's target market in Singapore. Right-to-left (RTL) languages are less commonly used and should not supported.
+6. The application's target market in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
 
 ### Glossary
 
