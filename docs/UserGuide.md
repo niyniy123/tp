@@ -8,6 +8,8 @@
 
 CaseTrack is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
 
+**Target Users:** CaseTrack is designed for **tech-savvy social workers in hospitals** who do not have access to patient information from the hospital database and need to manage a significant number of patients independently. If you prefer typing to mouse interactions and are comfortable using CLI apps, CaseTrack can help you efficiently track patient information and maintain detailed case notes.
+
 <!-- * Table of Contents -->
 <page-nav-print />
 
