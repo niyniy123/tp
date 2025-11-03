@@ -643,16 +643,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. Should work on any mainstream OS as long as it has Java `17` or above installed.
-2. Should be able to store and retrieve up to 10,000 patient records with the following performance requirements:
-    - Initial application startup and data load: < 1 minute on modern hardware (M2 Pro MacBook or equivalent)
-    - Search and filter operations: < 3 seconds to display results
-    - Individual record operations (add/edit/delete): < 1 second
-3. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
-4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
-5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
-6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
-7. Only English is supported, as the application targets users in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
+**Environment Requirements:**
+
+1. Should work on any 64-bit mainstream OS (Windows, Linux, Unix, MacOS) as long as it has Java `17` or above installed.
+2. The application should be usable on screens with a minimum resolution of 1280x720 pixels. For optimal viewing experience, a resolution of 1920x1080 or higher is recommended.
+
+**Performance Requirements:**
+Should be able to store and retrieve up to 10,000 patient records with the following performance requirements:
+
+3. Initial application startup and data load: < 1 minute on modern hardware (M2 Pro MacBook or equivalent)
+4. Search and filter operations: < 3 seconds to display results
+5. Individual record operations (add/edit/delete): < 1 second
+
+**Quality and Usability Requirements:**
+
+6. Healthcare helpers with basic CLI literacy (comfortable with typing commands and reading command-line feedback) should be able to perform common tasks (add, search, update patient records) within 10 minutes of initial training with the user guide.
+7. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+8. The system should provide clear, actionable error messages for all invalid inputs, specifying what was wrong and how to correct it.
+
+**Data Requirements:**
+
+9. All patient data must be stored in a human-readable format (JSON) that advanced users can manually edit if necessary. However, the application is not required to reflect changes made directly to the data file in the GUI while the app is running.
+10. The system must automatically save all changes to persistent storage immediately after each successful operation to prevent data loss.
+
+**Reliability and Robustness:**
+
+11.  The system should handle corrupted data files gracefully by offering to start with an empty dataset rather than crashing.
+12.  The system should validate all user inputs and reject invalid data without corrupting the existing dataset.
+
+**Security and Privacy Requirements:**
+
+13. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
+14. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
+
+**Miscellaneous**
+15. Only English is supported, as the application targets users in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
 
 ### Security and Privacy Considerations
 
@@ -693,7 +718,7 @@ Organizations must provide these through their IT infrastructure and policies.
 
 | Term | Definition |
 |------|------------|
-| **Mainstream OS** | Windows, Linux, Unix, MacOS |
+| **Mainstream OS** | 64-bit versions of Windows, Linux, Unix, MacOS |
 | **Patient Record** | A data entry with a patient's name, phone, address, income, medical info, and notes|
 | **Quick Note** | A brief text annotation attached to a patient record, typically captured during or immediately after a session |
 | **Session** | A meeting or consultation between a social worker and a patient |
@@ -701,6 +726,7 @@ Organizations must provide these through their IT infrastructure and policies.
 | **Medical Information** | Health-related details about a patient including conditions, medications, or treatment notes |
 | **Partial Data** | Incomplete patient information, common during initial visits or when full details are not available |
 | **Prefix** | Command parameter identifiers (e.g., n/ for name, p/ for phone) used in the CLI syntax |
+| **CLI Literacy** | Familiarity with command-line interfaces, including the ability to type commands, understand command syntax with prefixes, and interpret text-based feedback |
 
 --------------------------------------------------------------------------------------------------------------------
 
