@@ -81,19 +81,19 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
 * **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed).
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
-* **PHONE_NUMBER**: 
+* **PHONE_NUMBER**:
   * **Basic Format**: 3-17 digits, numbers only
   * **Country Code** (optional): Up to 3 digits with optional `+` prefix
     * With space: `+65 91234567` (recommended) - digits before space = country code
     * Without space: `+6591234567` - first 3 digits = country code
   * **Note**: Only ONE phone number is accepted per patient in the phone field. This phone number is used for patient identification and searching.
   * **Additional phone numbers** can be added in the patient's notes for reference purposes (e.g., "Secondary contact: 98765432"). However, **these additional phone numbers stored in notes cannot be used for searching** via the `search number` command. Only the primary phone number field is searchable.
-  * **Valid Examples**: 
+  * **Valid Examples**:
     * `91234567`
     * `+65 91234567` (with space)
     * `+6591234567` (without space)
     * `1 800123456`
-  * **Limitations**: 
+  * **Limitations**:
     * One phone number per patient (add more in notes)
     * No hyphens, spaces within number, labels, or parentheses
     * Not supported: `1234-5678`, `91234567 (HP)`, `(+65) 91234567`
@@ -147,6 +147,13 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [
 **Tip:** A patient can have any number of tags (including 0)
 </box>
 
+<box type="info" seamless>
+
+**Filter behavior:** If you're viewing filtered results (e.g., after using `search`):
+* The filter will be **preserved** if the new patient matches the search criteria.
+* The filter will be **cleared** and all patients will be shown if the new patient doesn't match the filter. This ensures the newly added patient remains visible.
+</box>
+
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/1200`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison i/0 m/Asthma t/criminal`
@@ -190,6 +197,9 @@ Format: `edit patient <PATIENT_INDEX> [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [
 * When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
 * You can remove all the patient's tags by typing `t/` without
     specifying any tags after it.
+* **Filter behavior**: If you're viewing filtered results (e.g., after using `search`):
+  * The filter will be **preserved** if the edited patient still matches the search criteria (e.g., editing phone or email after searching by name).
+  * The filter will be **cleared** and all patients will be shown if the edited patient no longer matches the filter (e.g., changing the name to something that doesn't match your search). This ensures the edited patient remains visible.
 
 Examples:
 *  `edit patient 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.

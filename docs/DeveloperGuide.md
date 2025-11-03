@@ -693,7 +693,7 @@ Patient data falls under Singapore's PDPA and [PDPC Advisory Guidelines for the 
 
 2. **Physical Security**: Install on computers in locked, access-controlled areas.
 
-3. **Access Controls**: 
+3. **Access Controls**:
    - Require strong authentication (passwords, biometrics)
    - Set file permissions to restrict `casetrack.json` access
    - Enable automatic screen locking

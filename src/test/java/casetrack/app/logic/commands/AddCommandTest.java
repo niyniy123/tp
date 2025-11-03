@@ -1,7 +1,11 @@
 package casetrack.app.logic.commands;
 
+import static casetrack.app.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static casetrack.app.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static casetrack.app.testutil.Assert.assertThrows;
+import static casetrack.app.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static casetrack.app.testutil.TypicalPersons.ALICE;
+import static casetrack.app.testutil.TypicalPersons.getTypicalAddressBook;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,8 +23,11 @@ import casetrack.app.logic.Messages;
 import casetrack.app.logic.commands.exceptions.CommandException;
 import casetrack.app.model.AddressBook;
 import casetrack.app.model.Model;
+import casetrack.app.model.ModelManager;
 import casetrack.app.model.ReadOnlyAddressBook;
 import casetrack.app.model.ReadOnlyUserPrefs;
+import casetrack.app.model.UserPrefs;
+import casetrack.app.model.person.NameContainsKeywordsPredicate;
 import casetrack.app.model.person.Person;
 import casetrack.app.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
@@ -51,6 +58,52 @@ public class AddCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_addPersonMatchingFilter_success() throws Exception {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        // Get the filtered person's name to create a new person with matching name
+        Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String[] splitName = personInFilteredList.getName().fullName.split("\\s+");
+
+        // Create a new person with a name that matches the filter (same first name)
+        Person newPerson = new PersonBuilder().withName(personInFilteredList.getName().fullName + " Tan")
+                .withPhone("99999999").withEmail("newperson@example.com")
+                .withAddress("New Street").withIncome("3000").build();
+
+        AddCommand addCommand = new AddCommand(newPerson);
+
+        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(newPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.addPerson(newPerson);
+        // Manually apply the same filter (which will now show 2 people matching the filter)
+        expectedModel.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertCommandSuccess(addCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addPersonNotMatchingFilter_success() throws Exception {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        // Create a new person with a name that doesn't match the filter
+        Person newPerson = new PersonBuilder().withName("Zara Tan")
+                .withPhone("99999999").withEmail("zara@example.com")
+                .withAddress("New Street").withIncome("3000").build();
+
+        AddCommand addCommand = new AddCommand(newPerson);
+
+        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(newPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.addPerson(newPerson);
+
+        assertCommandSuccess(addCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
