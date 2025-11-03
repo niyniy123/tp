@@ -46,8 +46,7 @@ public class EditNoteCommandParser implements Parser<EditNoteCommand> {
             patientIndex = ParserUtil.parseIndex(parts[0]);
             noteIndex = ParserUtil.parseIndex(parts[1]);
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditNoteCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(pe.getMessage() + "\n%1$s", EditNoteCommand.MESSAGE_USAGE));
         }
 
         newNote = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());

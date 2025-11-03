@@ -45,22 +45,22 @@ public class AddNoteCommandParserTest {
     @Test
     public void parse_invalidIndex_throwsParseException() {
         String userInput = "a " + PREFIX_NOTE_TEXT + "Valid note";
-        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                NoteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, userInput,
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + NoteCommand.MESSAGE_USAGE);
     }
 
     @Test
     public void parse_negativeIndex_throwsParseException() {
         String userInput = "-1 " + PREFIX_NOTE_TEXT + "Valid note";
-        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                NoteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, userInput,
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + NoteCommand.MESSAGE_USAGE);
     }
 
     @Test
     public void parse_zeroIndex_throwsParseException() {
         String userInput = "0 " + PREFIX_NOTE_TEXT + "Valid note";
-        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                NoteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, userInput,
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + NoteCommand.MESSAGE_USAGE);
     }
 
     @Test
