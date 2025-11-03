@@ -22,12 +22,15 @@ public class ViewDetailsCommandParser implements Parser<Command> {
      * @throws ParseException if the user input does not follow the expected format
      */
     public Command parse(String args) throws ParseException {
+        if (args == "") {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDetailsCommand.MESSAGE_USAGE));
+        }
+
         try {
             Index index = ParserUtil.parseIndex(args);
             return new ViewDetailsCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDetailsCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(pe.getMessage() + "\n%1$s", ViewDetailsCommand.MESSAGE_USAGE));
         }
     }
 }

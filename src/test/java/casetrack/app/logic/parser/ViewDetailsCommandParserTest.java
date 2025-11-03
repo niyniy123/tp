@@ -21,7 +21,7 @@ public class ViewDetailsCommandParserTest {
     @Test
     public void parse_patientWithInvalidFormat_throwsParseException() {
         assertParseFailure(parser, "-1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDetailsCommand.MESSAGE_USAGE));
+                String.format(ParserUtil.MESSAGE_INVALID_INDEX + "\n%1$s", ViewDetailsCommand.MESSAGE_USAGE));
     }
 
     @Test
