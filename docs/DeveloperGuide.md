@@ -333,7 +333,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* *a. At anytime, User cancels the action.
+* *a. At any time, User cancels the action.
 
   Use case ends.
 
@@ -353,7 +353,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to list patients.
 2.  System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients)).
-3.  User requests to delete a specific patients in the list.
+3.  User requests to delete a specific patient in the list.
 4.  System deletes the patient.
 5.  System shows success message.
 
@@ -379,7 +379,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* *a. At anytime, User cancels the action.
+* *a. At any time, User cancels the action.
 
   Use case ends.
 
@@ -425,8 +425,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a quick note with patient reference and text.
-2. System validates the patient reference and note text.
+1. User requests to add a quick note for a patient.
+2. System validates the input parameters.
 3. System stores the note to the patient's record.
 4. System confirms success by displaying the created note.
 
@@ -455,7 +455,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-#### Use case: (UC06): Delete quick note
+#### Use case (UC06): Delete quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -467,8 +467,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to remove a quick note with patient reference and note index.
-2. System validates the patient reference and note index.
+1. User requests to remove a quick note of patient.
+2. System validates the input parameters.
 3. System deletes the specified note from the patient's record.
 4. System confirms success by displaying the deleted note.
 
@@ -509,7 +509,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-#### Use case: (UC07): Edit quick note
+#### Use case (UC07): Edit quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -522,8 +522,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User types the command to edit a quick note with patient index, note index, and new note text.
-2. System validates the patient index, note index, and new note text.
+1. User requests to edit a quick note of patient.
+2. System validates the input parameters.
 3. System replaces the specified note under the patient's record with the new note text.
 4. System confirms success by displaying the updated note.
 
@@ -545,13 +545,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Person has no notes.
 
-    * 2d1. System shows an error message.
+    * 2c1. System shows an error message.
 
     Use case ends.
 
 * 2d. New note text is empty.
 
-    * 2e1. System shows an error message.
+    * 2d1. System shows an error message.
 
     Use case ends.
 
@@ -904,16 +904,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `note 1` (missing note text)<br>
       Expected: No note is added. Error message indicates invalid command format.
-
-1. Adding a note by patient name and phone
-
-   1. Prerequisites: A patient "John Doe" with phone "91234567" exists.
-
-   1. Test case: `note n/John Doe p/91234567 t/Patient attended session today`<br>
-      Expected: Note is added to the patient. Success message confirms addition.
-
-   1. Test case: `note n/Jane Doe p/99999999 t/Some note`<br>
-      Expected: No note is added. Error message indicates no patient found with given details.
 
 ### Editing a note
 

@@ -369,7 +369,7 @@ Format: `exit`
 
 ### Saving the data
 
-CaseTrack's data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+CaseTrack's data is saved on the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
@@ -380,7 +380,7 @@ The application is not designed to reflect changes made directly to the data fil
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, CaseTrack will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+If your changes to the data file make its format invalid, CaseTrack will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause CaseTrack to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
