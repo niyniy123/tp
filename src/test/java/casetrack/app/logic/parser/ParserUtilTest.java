@@ -23,7 +23,7 @@ import casetrack.app.model.person.Phone;
 import casetrack.app.model.tag.Tag;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_NAME = "11111";
     private static final String INVALID_PHONE = "65 12";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";

@@ -78,7 +78,9 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
 
 **Notes about parameter formats:**<br>
 
-* **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed).
+* **NAME**: Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), round brackets (()), at (@), 's/o' or 'd/o'
+  (case-insensitive), and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed), and must contain at least
+  one alphabetic character.
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
 * **PHONE_NUMBER**:
@@ -138,8 +140,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [m/MEDICAL_INFO] [
 <box type="info" seamless>
 
 **Constraints:**
-* Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank
-* Names cannot be fully numeric (e.g., `123` or `456789` are not allowed)
+* Names should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), round brackets (()), at (@), 's/o' or 'd/o'
+  (case-insensitive), and it should not be blank.
+* Names cannot be fully numeric (e.g., `123` or `456789` are not allowed), and must contain at least one alphabetic character.
 </box>
 
 <box type="tip" seamless>
