@@ -425,8 +425,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a quick note with patient reference and text.
-2. System validates the patient reference and note text.
+1. User requests to add a quick note for a patient.
+2. System validates the input parameters.
 3. System stores the note to the patient's record.
 4. System confirms success by displaying the created note.
 
@@ -467,8 +467,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to remove a quick note with patient reference and note index.
-2. System validates the patient reference and note index.
+1. User requests to remove a quick note of patient.
+2. System validates the input parameters.
 3. System deletes the specified note from the patient's record.
 4. System confirms success by displaying the deleted note.
 
@@ -522,8 +522,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User types the command to edit a quick note with patient index, note index, and new note text.
-2. System validates the patient index, note index, and new note text.
+1. User requests to edit a quick note of patient.
+2. System validates the input parameters.
 3. System replaces the specified note under the patient's record with the new note text.
 4. System confirms success by displaying the updated note.
 
