@@ -416,7 +416,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 #### Use case (UC05): Add quick note
 
 **Preconditions**
-* Patient record exists in the system (by index or by Name + Phone).
+* Patient record exists in the system (by index).
 
 **Guarantees**
 * A new note will be stored only if a valid patient is identified.
@@ -439,13 +439,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-*	2b. No matching patient found.
-
-    * 2b1. System shows an error message.
-
-      Use case ends.
-
-*	2c. Note text is empty.
+*	2b. Note text is empty.
 
     * 2c1. System shows an error message.
 
@@ -458,7 +452,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 #### Use case (UC06): Delete quick note
 
 **Preconditions**
-* Patient record exists in the system (by index or by Name + Phone).
+* Patient record exists in the system (by index).
 
 **Guarantees**
 * A note will only be deleted if a valid patient is identified and the note index exists.
@@ -481,25 +475,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-*	2b. No matching patient found.
-
-    * 2b1. System shows an error message.
-
-      Use case ends.
-
-*	2c. Phone number is invalid.
-
-    * 2c1. System shows an error message.
-
-      Use case ends.
-
-*	2d. Note index is empty.
+*	2b. Note index is empty.
 
     * 2d1. System shows an error message.
 
       Use case ends.
 
-*	2e. Note index is invalid.
+*	2c. Note index is invalid.
 
     * 2e1. System shows an error message.
 
@@ -512,7 +494,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 #### Use case (UC07): Edit quick note
 
 **Preconditions**
-* Patient record exists in the system (by index or by Name + Phone).
+* Patient record exists in the system (by index).
 
 **Guarantees**
 
@@ -677,6 +659,7 @@ Should be able to store and retrieve up to 10,000 patient records with the follo
 14. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
 
 **Miscellaneous**
+
 15. Only English is supported, as the application targets users in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
 
 ### Security and Privacy Considerations
@@ -1027,8 +1010,8 @@ Team size: 5
 This appendix lists planned enhancements for upcoming releases.
 
 1. Make product terminology consistent across UI, logs, and docs
-   - Feature flaw: Mixed "AddressBook" terms remain in UI messages, class names, and diagrams, which can confuse users (e.g., error logs mention `AddressBookStorage`).
-   - Change: Standardize user-facing terminology to "CaseTrack" and patient-centric terms. Update UI strings, log messages, and documentation references. No functional behavior changes.
+   - Feature flaw: Mixed "AddressBook" terms remain in class names, and diagrams, which can confuse users (e.g., error logs mention `AddressBookStorage`).
+   - Change: Standardize user-facing terminology to "CaseTrack" and patient-centric terms. Update log messages, and documentation references. No functional behavior changes.
    - Sample outputs:
      - Before: `Failed to save AddressBook to file.`
      - After: `Failed to save CaseTrack data to file.`
