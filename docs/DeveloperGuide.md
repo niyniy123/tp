@@ -1009,7 +1009,7 @@ Team size: 5
 
 This appendix lists planned enhancements for upcoming releases.
 
-1. Make product terminology consistent across UI, logs, and docs
+1. Make product terminology consistent across logs, and docs
    - Feature flaw: Mixed "AddressBook" terms remain in class names, and diagrams, which can confuse users (e.g., error logs mention `AddressBookStorage`).
    - Change: Standardize user-facing terminology to "CaseTrack" and patient-centric terms. Update log messages, and documentation references. No functional behavior changes.
    - Sample outputs:
