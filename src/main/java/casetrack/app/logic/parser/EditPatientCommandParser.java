@@ -1,6 +1,5 @@
 package casetrack.app.logic.parser;
 
-import static casetrack.app.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static casetrack.app.logic.parser.CliSyntax.PREFIX_INCOME;
@@ -38,8 +37,7 @@ public class EditPatientCommandParser implements Parser<EditPatientCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditPatientCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(pe.getMessage() + "\n%1$s", EditPatientCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,

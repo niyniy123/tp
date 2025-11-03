@@ -72,7 +72,8 @@ public class EditCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, "patient " + VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "patient " + VALID_NAME_AMY,
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditPatientCommand.MESSAGE_USAGE);
 
         // no field specified
         assertParseFailure(parser, "patient 1", EditPatientCommand.MESSAGE_NOT_EDITED);
@@ -87,13 +88,16 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "patient -5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "patient -5" + NAME_DESC_AMY,
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditPatientCommand.MESSAGE_USAGE);
 
         // zero index
-        assertParseFailure(parser, "patient 0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "patient 0" + NAME_DESC_AMY,
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditPatientCommand.MESSAGE_USAGE);
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "patient 1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "patient 1 some random string",
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditPatientCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -320,27 +324,27 @@ public class EditCommandParserTest {
     public void parse_noteWithInvalidIndices_throwsParseException() {
         // invalid person index (not a number)
         assertParseFailure(parser, "note abc 2 t/Updated note",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditNoteCommand.MESSAGE_USAGE);
 
         // invalid note index (not a number)
         assertParseFailure(parser, "note 1 xyz t/Updated note",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditNoteCommand.MESSAGE_USAGE);
 
         // negative person index
         assertParseFailure(parser, "note -1 2 t/Updated note",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditNoteCommand.MESSAGE_USAGE);
 
         // zero person index
         assertParseFailure(parser, "note 0 2 t/Updated note",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditNoteCommand.MESSAGE_USAGE);
 
         // negative note index
         assertParseFailure(parser, "note 1 -2 t/Updated note",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditNoteCommand.MESSAGE_USAGE);
 
         // zero note index
         assertParseFailure(parser, "note 1 0 t/Updated note",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNoteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_INVALID_INDEX + "\n" + EditNoteCommand.MESSAGE_USAGE);
     }
 
     @Test

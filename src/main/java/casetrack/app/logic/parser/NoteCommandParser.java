@@ -38,7 +38,7 @@ public class NoteCommandParser implements Parser<NoteCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(pe.getMessage() + "\n%1$s", NoteCommand.MESSAGE_USAGE));
         }
 
         Note note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE_TEXT).get());
