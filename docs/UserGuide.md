@@ -79,19 +79,19 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
 * **NAME**: Should only contain alphanumeric characters, spaces, periods (.), apostrophes ('), hyphens (-), 's/o', 'd/o', 'S/O', or 'D/O', and it should not be blank. Names cannot be fully numeric (e.g., `123` or `456789` are not allowed).
   * Examples: `John Doe`, `Dr. Lim`, `o'Connor`, `Mary O'Brien`, `John Jr.`, `Ravichandran S/O Tharumalinga`, `Mary-Jane`, `Jean-Claude`
 
-* **PHONE_NUMBER**: 
+* **PHONE_NUMBER**:
   * **Basic Format**: 3-17 digits, numbers only
   * **Country Code** (optional): Up to 3 digits with optional `+` prefix
     * With space: `+65 91234567` (recommended) - digits before space = country code
     * Without space: `+6591234567` - first 3 digits = country code
   * **Note**: Only ONE phone number is accepted per patient in the phone field. This phone number is used for patient identification and searching.
   * **Additional phone numbers** can be added in the patient's notes for reference purposes (e.g., "Secondary contact: 98765432"). However, **these additional phone numbers stored in notes cannot be used for searching** via the `search number` command. Only the primary phone number field is searchable.
-  * **Valid Examples**: 
+  * **Valid Examples**:
     * `91234567`
     * `+65 91234567` (with space)
     * `+6591234567` (without space)
     * `1 800123456`
-  * **Limitations**: 
+  * **Limitations**:
     * One phone number per patient (add more in notes)
     * No hyphens, spaces within number, labels, or parentheses
     * Not supported: `1234-5678`, `91234567 (HP)`, `(+65) 91234567`
