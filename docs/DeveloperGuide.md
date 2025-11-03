@@ -650,6 +650,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4. Healthcare helpers with basic computer literacy should be able to perform common tasks (add, search, update patient records) within 5 minutes of initial training.
 5. A user with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
 6. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
+7. Only English is supported, as the application targets users in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
 
 ### Security and Privacy Considerations
 
