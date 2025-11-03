@@ -69,9 +69,9 @@ activate Model
 Model -> Predicate : test(person)
 activate Predicate
 note right
-  Validates if keyword is valid phone
-  and checks if person's phone
-  contains the country code
+  Checks if person's phone
+  contains the search keyword
+  (supports partial matching)
 end note
 
 Predicate --> Model : true/false
