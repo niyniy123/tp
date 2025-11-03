@@ -55,9 +55,13 @@ public class DeleteCommandParser implements Parser<Command> {
                     DeleteNoteCommand.MESSAGE_USAGE));
         }
 
-        Index personIndex = ParserUtil.parseIndex(parts[0]);
-        Index noteIndex = ParserUtil.parseIndex(parts[1]);
-        return new DeleteNoteCommand(personIndex, noteIndex);
+        try {
+            Index personIndex = ParserUtil.parseIndex(parts[0]);
+            Index noteIndex = ParserUtil.parseIndex(parts[1]);
+            return new DeleteNoteCommand(personIndex, noteIndex);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(pe.getMessage() + "\n%1$s", DeleteNoteCommand.MESSAGE_USAGE));
+        }
     }
 
     /**
@@ -77,8 +81,12 @@ public class DeleteCommandParser implements Parser<Command> {
                     DeletePatientCommand.MESSAGE_USAGE));
         }
 
-        Index index = ParserUtil.parseIndex(parts[0]);
-        return new DeletePatientCommand(index);
+        try {
+            Index index = ParserUtil.parseIndex(parts[0]);
+            return new DeletePatientCommand(index);
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(pe.getMessage() + "\n%1$s", DeletePatientCommand.MESSAGE_USAGE));
+        }
     }
 
     /**
