@@ -6,6 +6,8 @@
 
 # CaseTrack Developer Guide
 
+![CaseTrack Logo](images/casetrack.png)
+
 <!-- * Table of Contents -->
 <page-nav-print />
 
