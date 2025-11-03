@@ -9,8 +9,10 @@ import static java.util.Objects.requireNonNull;
  */
 public class Tag {
 
-    public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric and may contain hyphens";
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}-]+";
+    public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric and may contain hyphens "
+            + "as separators (e.g., high-priority). Tags cannot start or end with hyphens, "
+            + "or contain consecutive hyphens.";
+    public static final String VALIDATION_REGEX = "\\p{Alnum}+(-\\p{Alnum}+)*";
 
     public final String tagName;
 
