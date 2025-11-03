@@ -101,7 +101,7 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        
+
         if (!filteredPersons.contains(person)) {
             updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
