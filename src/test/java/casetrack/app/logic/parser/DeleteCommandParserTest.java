@@ -67,4 +67,16 @@ public class DeleteCommandParserTest {
         assertParseFailure(parser, "patient",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommandParser.MESSAGE_INVALID_DELETE_FORMAT));
     }
+
+    @Test
+    public void parse_patientWithInvalidIndex_throwsParseException() {
+        assertParseFailure(parser, "patient x",
+                String.format(ParserUtil.MESSAGE_INVALID_INDEX + "\n%1$s", DeletePatientCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_noteWithInvalidIndexes_throwsParseException() {
+        assertParseFailure(parser, "note a b",
+                String.format(ParserUtil.MESSAGE_INVALID_INDEX + "\n%1$s", DeleteNoteCommand.MESSAGE_USAGE));
+    }
 }
