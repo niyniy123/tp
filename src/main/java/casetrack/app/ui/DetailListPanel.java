@@ -76,6 +76,8 @@ public class DetailListPanel extends UiPart<Region> {
         @Override
         protected void updateItem(PersonAttribute attribute, boolean empty) {
             super.updateItem(attribute, empty);
+            setMouseTransparent(true);
+            setFocusTraversable(false);
 
             if (empty || attribute == null) {
                 setGraphic(null);

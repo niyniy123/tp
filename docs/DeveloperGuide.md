@@ -298,17 +298,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User enters the `add` command in the format add n/NAME p/PHONE a/ADDRESS i/INCOME [m/MEDICAL_INFO].
-2. System parses the command and validates input
-3. System normalizes NAME (case-insensitive and multiple spaces collapsed to single space) and checks for duplicates using NAME+PHONE.
-4. System creates and saves the new patient record.
-5. System confirms through success message.
+1. User requests to add a patient.
+2. System validates the input.
+3. System creates the new patient record.
+4. System confirms through success message.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. Missing mandatory fields (n/ or p/ absent, or empty after prefix)
+* 1a. Missing mandatory fields.
 
     * 1a1. System shows the required fields.
 
@@ -316,42 +315,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
-* 2a. Invalid NAME (contains digits/symbols)
+* 2a. Invalid input parameters.
+
     * 2a1. System shows an error message.
 
     * 2a2. No patient is added.
 
   Use case ends.
 
-* 2b. Invalid PHONE (not 3-17 digits after trimming):
+* 2b. Duplicate patient found.
 
     * 2b1. System shows an error message.
 
     * 2b2. No patient is added.
-
-  Use case ends.
-
-* 2c. Invalid INCOME (not numeric or < 0):
-
-    * 2c1. System shows an error message.
-
-    * 2c2. No patient is added.
-
-  Use case ends.
-
-* 2d. Invalid input format (e.g., unrecognized/missing prefixes, duplicated prefixes or empty values):
-
-    * 2d1. System shows an appropriate input format error message, including the correct command usage and example.
-
-    * 2d2. No patient is added.
-
-  Use case ends.
-
-* 3a. Duplicate patient found (same normalized NAME and same PHONE already exist):
-
-    * 3a1. System shows an error message.
-
-    * 3a2. No patient is added.
 
   Use case ends.
 
@@ -363,21 +339,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Social Worker inputs a list command.
+1. User inputs a list command.
 2. CaseTrack displays a list of all patients.
 
-Use case ends.
+   Use case ends.
 
 
 #### Use case (UC03): Delete patient
 
 **MSS**
 
-1. User requests to list patients
-2.  System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
-3.  User requests to delete a specific patients in the list
-4.  System deletes the patient
-5.  System shows success message
+1. User requests to list patients.
+2.  System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients)).
+3.  User requests to delete a specific patients in the list.
+4.  System deletes the patient.
+5.  System shows success message.
 
     Use case ends.
 
@@ -406,40 +382,27 @@ Use case ends.
   Use case ends.
 
 
-#### Use case (UC04): Search Patients
+#### Use case (UC04): Search patient
 
 **MSS**
 
-1. User enters the `search` command with a single filter attribute (name, number, email, or tag) and one or more keywords.
-2. System parses the command and validates input parameters.
-3. System filters the patient list based on the provided criteria.
-4. System displays all matching patient records.
+1. User requests search with a single filter attribute (name, number, email, or tag).
+2. System validates input parameters.
+3. System displays all matching patient records.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. No field or keywords specified (empty search command).
+* 1a. Invalid input parameters.
 
     * 1a1. System shows an error message.
 
       Use case ends.
 
-* 2a. Invalid field specified (not name, number, email, or tag).
+* 1b. No patients match the search criteria.
 
-    * 2a1. System shows an error message.
-
-      Use case ends.
-
-* 2b. No keywords provided after field specification.
-
-    * 2b1. System shows an error message.
-
-      Use case ends.
-
-* 3a. No patients match the search criteria.
-
-    * 3a1. System informs the User that no patients match the search criteria.
+    * 1b1. System informs the User that no patients match the search criteria.
 
       Use case ends.
 
@@ -448,7 +411,7 @@ Use case ends.
     Use case ends.
 
 
-#### Use case (UC05): Add Quick Note
+#### Use case (UC05): Add quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -460,11 +423,10 @@ Use case ends.
 
 **MSS**
 
-1.	User types the command to add a quick note with patient reference and text.
-2.	System validates the patient reference (index or Name + Phone).
-3.	System validates the note text is not empty.
-4.	System stores the note under the patient’s record.
-5.	System confirms success by displaying the created note.
+1. User requests to add a quick note with patient reference and text.
+2. System validates the patient reference and note text.
+3. System stores the note to the patient's record.
+4. System confirms success by displaying the created note.
 
     Use case ends.
 
@@ -481,15 +443,9 @@ Use case ends.
 
       Use case ends.
 
-*	2c. Phone number invalid (not 3-17 digits).
+*	2c. Note text is empty.
 
     * 2c1. System shows an error message.
-
-      Use case ends.
-
-*	3a. Note text is empty.
-
-    * 3a1. System shows an error message.
 
       Use case ends.
 
@@ -497,7 +453,7 @@ Use case ends.
 
     Use case ends.
 
-#### Use case: (UC06): Delete Quick Note
+#### Use case: (UC06): Delete quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -508,11 +464,11 @@ Use case ends.
 * Invalid inputs will not delete notes.
 
 **MSS**
-1.	User types the command to remove a quick note with patient reference and note index.
-2.	System validates the patient reference (index or Name + Phone).
-3.	System validates the note index.
-4.	System deletes the specified note under the patient’s record.
-5.	System confirms success by displaying the deleted note.
+
+1. User requests to remove a quick note with patient reference and note index.
+2. System validates the patient reference and note index.
+3. System deletes the specified note from the patient's record.
+4. System confirms success by displaying the deleted note.
 
     Use case ends.
 
@@ -529,21 +485,21 @@ Use case ends.
 
       Use case ends.
 
-*	2c. Phone number invalid (not 3-17 digits).
+*	2c. Phone number is invalid.
 
     * 2c1. System shows an error message.
 
       Use case ends.
 
-*	3a. Note index is empty.
+*	2d. Note index is empty.
 
-    * 3a1. System shows an error message.
+    * 2d1. System shows an error message.
 
       Use case ends.
 
-*	3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has)
+*	2e. Note index is invalid.
 
-    * 3b1. System shows an error message.
+    * 2e1. System shows an error message.
 
       Use case ends.
 
@@ -551,7 +507,7 @@ Use case ends.
 
     Use case ends.
 
-#### Use case: (UC07): Edit Quick Note
+#### Use case: (UC07): Edit quick note
 
 **Preconditions**
 * Patient record exists in the system (by index or by Name + Phone).
@@ -565,150 +521,90 @@ Use case ends.
 **MSS**
 
 1. User types the command to edit a quick note with patient index, note index, and new note text.
-2. System validates the patient index.
-3. System validates the note index.
-4. System validates the new note text.
-5. System replaces the specified note under the patient's record with the new note text.
-6. System confirms success by displaying the updated note.
+2. System validates the patient index, note index, and new note text.
+3. System replaces the specified note under the patient's record with the new note text.
+4. System confirms success by displaying the updated note.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. Patient index is invalid (not a number, less than 1, or more than the number of total patients).
+* 2a. Patient index is invalid.
 
     * 2a1. System shows an error message.
 
     Use case ends.
 
-* 3a. Note index is empty.
+* 2b. Note index is invalid.
 
-    * 3a1. System shows an error message
+    * 2b1. System shows an error message.
 
     Use case ends.
 
-* 3b. Note index is invalid (not a number, less than 1, or more than the number of total notes the patient currently has).
+* 2c. Person has no notes.
+
+    * 2d1. System shows an error message.
+
+    Use case ends.
+
+* 2d. New note text is empty.
+
+    * 2e1. System shows an error message.
+
+    Use case ends.
+
+* *a. At any time, User cancels the action.
+
+    Use case ends.
+
+#### Use case (UC08): Edit patient
+
+**Preconditions**
+* At least one patient is listed in the current view.
+
+**Guarantees**
+* Patient details are updated only when a valid patient selection and valid details are provided.
+* Invalid inputs do not modify any patient data.
+
+**MSS**
+1. User requests to list patients.
+2. System <u>shows a list of patients</u> ([UC02](#use-case-uc02-view-all-patients))
+3. User requests an update to a patient details.
+4. System updates the patient's details.
+5. System confirms that the update was successful.
+
+   Use case ends.
+
+**Extensions**
+* 2a. The list is empty.
+
+    * 2a1. System indicates that there are no patients available.
+
+      Use case ends.
+
+* 3a. The patient selection is invalid.
+
+    * 3a1. System shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The patient edit details are invalid.
 
     * 3b1. System shows an error message.
 
-    Use case ends.
+      Use case ends.
 
-* 3c. Person has no notes.
+* 3c. Duplicate patient found.
 
     * 3c1. System shows an error message.
 
-    Use case ends.
-
-* 4a. Note text is empty or contains only whitespace.
-
-  * 4a1. System shows an error message.
-
-  Use case ends.
-
-- \*a. At any time, User cancels the action.
-
-  Use case ends.
-
-#### Use case (UC08): Edit patient income
-
-**Preconditions**
-* At least one patient is listed in the current view.
-
-**Guarantees**
-* Income is updated only when a valid patient selection and a valid income value are provided.
-* Invalid inputs do not modify any patient data.
-
-**MSS**
-1. User requests to list patients.
-2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
-3. User initiates an update to a patient's income, identifying the target patient and providing the new income value.
-4. System validates the patient selection.
-5. System validates the income value.
-6. System updates the patient's income.
-7. System confirms that the update was successful.
-
-   Use case ends.
-
-**Extensions**
-* 2a. The list is empty.
-
-    * 2a1. System indicates that there are no patients available.
-
-      Use case ends.
-
-* 3a. No income value is provided.
-
-    * 3a1. System indicates that an income value is required.
-
-      Use case ends.
-
-* 4a. The patient selection is invalid.
-
-    * 4a1. System indicates that the selection is invalid.
-
-      Use case resumes at step 2.
-
-* 5a. The income value does not satisfy validation rules (e.g., non-numeric, negative, contains currency symbols or commas).
-
-    * 5a1. System indicates the validation error.
-
       Use case ends.
 
 * *a. At any time, User cancels the action.
 
   Use case ends.
 
-
-#### Use case (UC09): Edit patient medical information
-
-**Preconditions**
-* At least one patient is listed in the current view.
-
-**Guarantees**
-* Medical information is updated only when a valid patient selection and a valid medical information value are provided.
-* Invalid inputs do not modify any patient data.
-
-**MSS**
-1. User requests to list patients.
-2. System shows a list of patients. (See [UC02](#use-case-uc02-view-all-patients))
-3. User initiates an update to a patient's medical information, identifying the target patient and providing the new medical information.
-4. System validates the patient selection.
-5. System validates the medical information.
-6. System updates the patient's medical information.
-7. System confirms that the update was successful.
-
-   Use case ends.
-
-**Extensions**
-* 2a. The list is empty.
-
-    * 2a1. System indicates that there are no patients available.
-
-      Use case ends.
-
-* 3a. No medical information is provided.
-
-    * 3a1. System indicates that medical information is required.
-
-      Use case ends.
-
-* 4a. The patient selection is invalid.
-
-    * 4a1. System indicates that the selection is invalid.
-
-      Use case resumes at step 2.
-
-* 5a. The medical information does not satisfy validation rules (e.g., only whitespace).
-
-    * 5a1. System indicates the validation error.
-
-      Use case ends.
-
-* *a. At any time, User cancels the action.
-
-  Use case ends.
-
-#### Use case (UC10): View patient details
+#### Use case (UC09): View patient details
 
 **Preconditions**
 * At least one patient is listed in the current view.
@@ -778,9 +674,8 @@ Should be able to store and retrieve up to 10,000 patient records with the follo
 13. All patient data must be stored locally with no transmission over networks to ensure patient privacy compliance.
 14. The application should be deployed and used only on secure, access-controlled systems that comply with relevant data protection regulations (e.g., PDPA, HIPAA).
 
-**Constraints:**
-
-15.  The product is not required to handle concurrent access by multiple users or support multi-user authentication.
+**Miscellaneous**
+15. Only English is supported, as the application targets users in Singapore. Right-to-left (RTL) languages are less commonly used and should not be supported.
 
 ### Security and Privacy Considerations
 
@@ -1132,3 +1027,133 @@ testers are expected to do more *exploratory* testing.
       1. Go to `/data` folder and delete `casetrack.json`.
       2. Launch CaseTrack.
       3. CaseTrack launches normally with sample data loaded.
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+This appendix lists planned enhancements for upcoming releases.
+
+1. Make product terminology consistent across UI, logs, and docs
+   - Feature flaw: Mixed "AddressBook" terms remain in UI messages, class names, and diagrams, which can confuse users (e.g., error logs mention `AddressBookStorage`).
+   - Change: Standardize user-facing terminology to "CaseTrack" and patient-centric terms. Update UI strings, log messages, and documentation references. No functional behavior changes.
+   - Sample outputs:
+     - Before: `Failed to save AddressBook to file.`
+     - After: `Failed to save CaseTrack data to file.`
+
+2. Make medical information input structured and readable
+   - Feature flaw: The `m/` field is an unstructured free‑text blob, making information hard to read and impossible to filter precisely.
+   - Change: Accept optional subfields when adding/editing a patient, and render them as labeled sections in the UI.
+   - Sample inputs:
+     ```
+     add n/Noah Tan p/91234567 e/noah.tan@example.com a/123 Serangoon Ave i/4000 \
+       v/BP 128/82; Pulse 76; Temp 37.1 \
+       al/Penicillin(rash), Peanuts(swelling) \
+       mh/T2D(2019); Hypertension(2021) \
+       cm/Metformin 500mg daily; Lisinopril 10mg daily \
+       cn/Reports occasional dizziness
+     ```
+   - Sample UI (textual):
+     - Vitals: BP 128/82, Pulse 76, Temp 37.1°C
+     - Allergies: Penicillin (rash), Peanuts (swelling)
+     - History: T2D (2019), Hypertension (2021)
+     - Medications: Metformin 500mg daily; Lisinopril 10mg daily
+     - Notes: Reports occasional dizziness
+
+3. Make Help command restore and focus the Help window
+   - Feature flaw: Re-running `help` when the Help window is minimized does nothing visible; users think the command failed.
+   - Change: If a Help window exists, bring it to front and un-minimize it; otherwise, open a new Help window. Provide a status message when restored.
+   - Sample behavior:
+     - Command: `help` (when Help is minimized) ➜ Help window is restored and focused; status bar shows: `Help window restored`.
+     - Command: `help` (when Help is closed) ➜ Help window opens as usual.
+
+4. Extend search to cover medical conditions in patient records
+   - Feature flaw: Existing search supports name/phone/email/tag only; users cannot find patients by conditions or medications stored in medical info.
+   - Change: Extend the existing `search` command with qualifiers that filter by structured medical info or substrings within the medical information field.
+   - Sample inputs:
+     ```
+     search condition asthma
+     search condition diabetes
+     search meds metformin
+     search allergy penicillin
+     ```
+   - Expected outcome: Lists patients whose medical information matches the qualifier (e.g., all patients with asthma or taking Metformin).
+
+5. Add country code context for consistent phone number handling
+    - Feature flaw: Phone numbers with and without country codes (e.g., "9111 1111" vs "+65 9111 1111") are treated as distinct, allowing duplicate patients with identical details but different phone number formats to be added.
+    - Change: Allow users to configure a default country code in application settings. When checking for duplicates, normalize all phone numbers by applying the default country code to numbers lacking one. Display the active country code setting prominently in the UI and provide clear feedback about phone number normalization.
+    - Sample inputs:
+    ```
+     setcountry +65
+     add n/John Doe p/9111 1111 e/john@example.com a/123 Street
+     add n/John Doe p/+65 9111 1111 e/john@example.com a/123 Street
+    ```
+    - Sample behavior:
+        - Command: `setcountry +65` ➜ Status bar shows: `Default country code set to +65. Phone numbers without country codes will be treated as +65 numbers for duplicate detection.`
+        - First `add` command succeeds; internally normalized and stored as "+65 9111 1111"
+        - Second `add` command fails with: `This patient already exists in CaseTrack. A patient with the name "John Doe" and phone number "+65 9111 1111" is already registered.`
+        - UI displays country code indicator in settings panel (e.g., "Default Country Code: +65") and shows normalized format in patient details
+
+6. Make result display box dynamically resizable for improved readability
+    - Feature flaw: The result display box remains fixed in size, requiring users to scroll vertically and/or horizontally to view long messages or error feedback, even when the application window is maximized. This breaks the natural command-feedback flow and hinders usability.
+    - Change: Implement dynamic resizing for the result display box with automatic text wrapping and adaptive height. The box should expand to accommodate longer messages up to a reasonable maximum, and all UI components should resize proportionally when the application window is resized. Enable smooth vertical scrolling only when messages exceed the maximum displayable height.
+    - Sample behavior:
+        - User executes command with invalid format ➜ Result box expands vertically to display the complete error message without horizontal scrolling; text wraps naturally within the available width.
+        - User maximizes application window ➜ Result box scales proportionally, displaying more content without requiring scrolling for moderately long messages.
+        - User executes command with extremely long output ➜ Result box expands to predefined maximum height (e.g., 40% of window height), then enables smooth vertical scrolling for remaining content.
+        - All feedback messages remain immediately visible without manual scrolling for typical use cases, preserving the CLI-style immediate feedback experience.
+
+7. Make search name function use AND-based matching for precise results
+    - Feature flaw: The `search name` command performs a loose OR-based keyword match, returning any patient whose name contains any of the provided keywords rather than all of them. This causes search results to include many irrelevant entries, making it difficult to locate specific patients efficiently.
+    - Change: Modify the `search name` command to use AND-based matching by default, requiring all provided keywords to be present in the patient's name. Optionally, add a flag to enable OR-based matching when users need broader search results.
+    - Sample inputs:
+    ```
+         search name John Tan
+         search name John Tan --any
+    ```
+    - Sample behavior:
+       - Command: `search name John Tan` (AND-based, default) ➜ Returns only patients whose names contain both "John" AND "Tan" (e.g., "John Tan", "Tan John Wei").
+       - Command: `search name John Tan` (current behavior) ➜ Returns all patients with "John" OR "Tan" in their names (e.g., "John Doe", "Mary Tan", "John Tan"), resulting in many irrelevant matches.
+       - Command: `search name John Tan --any` (OR-based, optional) ➜ Returns patients with "John" OR "Tan" for broader searches when needed.
+       - Result message displays search mode: `5 patients found matching all keywords: John, Tan` or `12 patients found matching any keyword: John, Tan`
+
+8. Include useful fields to make the application more complete
+    - Feature flaw: CaseTrack requires income as a mandatory field while lacking more critical healthcare-related fields such as date of birth, sex/gender, emergency contact, and insurance information. This makes the application feel incomplete for its intended healthcare management purpose, especially since medical information itself is optional while income is mandatory.
+    - Change: Introduce new fields for essential patient information. Add date of birth (mandatory), sex/gender (optional), emergency contact (optional with name and phone), and insurance provider (optional). Update validation logic and UI to accommodate these fields with appropriate input formats and display layouts.
+    - Sample inputs:
+    ```
+         add n/Sarah Lee dob/15/03/1985 g/Female p/91234567 e/sarah@example.com a/123 Street i/3500 \
+           ec/John Lee; 98765432 ins/MediShield Life
+         add n/David Ng dob/22/11/1992 p/87654321 e/david@example.com a/456 Avenue
+    ```
+    - Sample UI (textual):
+       - Name: Sarah Lee
+       - Date of Birth: 15/03/1985 (Age: 40)
+       - Gender: Female
+       - Emergency Contact: John Lee (98765432)
+       - Insurance: MediShield Life
+       - Income: $3,500
+
+9. Optimize tag handling and rendering for improved performance
+    - Feature flaw: The application experiences significant lag and slowdown when a large number of tags are attached to a single patient, impacting responsiveness and usability for users who utilize extensive tagging systems.
+    - Change: Implement performance optimizations for tag storage, retrieval, and rendering. Add lazy loading for tag display, optimize the UI rendering pipeline to handle large tag collections efficiently, and introduce a configurable limit on the maximum number of visible tags (with an expandable "show more" option). Refactor the underlying tag data structure to improve lookup and filtering performance.
+    - Sample behavior:
+        - Patient with 50+ tags ➜ UI displays first 10 tags with a badge showing "+40 more tags" and an expand button; clicking expands to show all tags in a scrollable view.
+        - Tag filtering and search operations ➜ Remain responsive even with patients having 100+ tags due to optimized indexing.
+        - Tag display rendering ➜ Uses virtualization to render only visible tags, significantly reducing DOM overhead.
+        - Settings option ➜ Users can configure the default number of visible tags (e.g., 5, 10, 15, or "show all").
+    - Sample UI (textual):
+        - Tags: [Diabetes] [Hypertension] [High-Risk] [Regular-Checkup] [Senior] [Wheelchair] [Hearing-Aid] [Vision-Impaired] [Cognitive-Decline] [Fall-Risk] ... +42 more [Expand ▼]
+
+10. Support adding multiple notes to a patient in a single command
+    - Feature flaw: The `note` command currently only processes the first note when multiple `t/` prefixes are provided in a single command (e.g., `note 2 t/first note t/second note`), ignoring subsequent notes. This requires users to execute multiple commands to add several notes, reducing efficiency.
+    - Change: Extend the `note` command to accept and process multiple `t/` prefixes in a single command, adding all specified notes to the patient's note list in the order provided.
+    - Sample inputs:
+    ```
+     note 2 t/Patient reports chest pain during exercise t/Scheduled for ECG next week t/Follow-up required
+     note 5 t/Medication dosage adjusted t/Patient tolerating new dosage well
+    ```
+    - Sample behavior:
+      - Command: `note 2 t/first note t/second note t/third note` ➜ All three notes are added to patient #2's record
+      - Success message: `3 notes added to patient: John Tan`
+      - Single note command continues to work: `note 2 t/single note` ➜ Adds one note as before.

@@ -20,8 +20,8 @@ public class ViewDetailsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows details for the patient identified by the index number used in the displayed patient list.\n"
-            + "Parameters: patient INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " patient 1";
+            + "Parameters: <PATIENT_INDEX> (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_VIEW_DETAILS_SUCCESS = "Viewing details for patient: %1$s";
 

@@ -8,6 +8,8 @@
 
 CaseTrack is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CaseTrack can get your patient management tasks done faster than traditional GUI apps.
 
+**Target Users:** CaseTrack is designed for **tech-savvy social workers in hospitals** who do not have access to patient information from the hospital database and need to manage a significant number of patients independently. If you prefer typing to mouse interactions and are comfortable using CLI apps, CaseTrack can help you efficiently track patient information and maintain detailed case notes.
+
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -82,6 +84,8 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
   * **Country Code** (optional): Up to 3 digits with optional `+` prefix
     * With space: `+65 91234567` (recommended) - digits before space = country code
     * Without space: `+6591234567` - first 3 digits = country code
+  * **Note**: Only ONE phone number is accepted per patient in the phone field. This phone number is used for patient identification and searching.
+  * **Additional phone numbers** can be added in the patient's notes for reference purposes (e.g., "Secondary contact: 98765432"). However, **these additional phone numbers stored in notes cannot be used for searching** via the `search number` command. Only the primary phone number field is searchable.
   * **Valid Examples**: 
     * `91234567`
     * `+65 91234567` (with space)
@@ -104,7 +108,8 @@ CaseTrack is a **desktop app for managing patients, optimized for use via a Comm
 * **ADDRESS**: Can take any values, and it should not be blank.
 
 * **INCOME**: Should be a valid non-negative number with up to 2 decimal places (e.g., `1200`, `2500.50`).
-  * Display: Income is shown with exactly two decimal places. If you enter more than two decimal places, the value is shown rounded to the nearest cent (e.g., `0.00000000000001` displays as `0.00`).
+  * Currently **mandatory** for all patient records
+  * Display: Income is shown with exactly two decimal places. If you enter more than two decimal places, the value is shown rounded down to the nearest cent (e.g., `0.00000000000001` displays as `0.00`).
   * Currency: Only Singapore Dollars (SGD) are supported. Enter numeric amounts without any currency symbols; all income is treated and displayed as SGD (e.g., `1200` shows as `SGD 1,200.00`).
 
 * **MEDICAL_INFO**: Can take any values, and it should not be blank.
@@ -149,7 +154,8 @@ Examples:
 **Note on Duplicate Patients:**
 CaseTrack prevents adding duplicate patients. A patient is considered a duplicate if **both** the name and phone number match an existing patient:
 - Name matching is **case-insensitive** (e.g., "John Doe" = "john doe")
-- Extra spaces in names are ignored (e.g., "John Doe" = "John  Doe")
+- Extra spaces in names are ignored (e.g., "John  Doe" = "John Doe")
+- Phone numbers are **normalized** by removing '+' signs and spaces (e.g., "+65 91234567" = "6591234567" = "65 91234567")
 - Multiple patients can share the same name if they have different phone numbers
 - Multiple patients can share the same phone number if they have different names
 
@@ -158,6 +164,8 @@ Examples:
 - ✅ Allowed: "John Doe" (91234567) and "Jane Doe" (91234567) - different name, same phone
 - ❌ Blocked: "John Doe" (91234567) and "john doe" (91234567) - duplicate (case-insensitive match)
 - ❌ Blocked: "John Doe" (91234567) and "John  Doe" (91234567) - duplicate (whitespace ignored)
+- ❌ Blocked: "John Doe" (+65 91234567) and "John Doe" (6591234567) - duplicate (normalized phone numbers match)
+- ❌ Blocked: "John Doe" (+65 91234567) and "john doe" (65 91234567) - duplicate (both name and phone match after normalization)
 
 </box>
 
@@ -406,6 +414,8 @@ See [PDPC Advisory Guidelines for the Healthcare Sector](https://www.pdpc.gov.sg
 **Q**: Can I use CaseTrack on my personal laptop?<br>
 **A**: Only if it meets security requirements: no internet access, physical security, and access controls. Get approval from your data protection officer first.
 
+**Q**: Why is the income field mandatory?
+**A**: The income field supports future planned features for financial aid assessment etc.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues

@@ -11,5 +11,5 @@
          <Insets bottom="10.0" />
       </VBox.margin>
    </Label>
-  <ListView fx:id="detailListView" VBox.vgrow="ALWAYS" />
+  <ListView fx:id="detailListView" focusTraversable="false" VBox.vgrow="ALWAYS" />
 </VBox>

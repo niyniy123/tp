@@ -64,4 +64,79 @@ public class PhoneTest {
         // different values -> returns false
         assertFalse(phone.equals(new Phone("995")));
     }
+
+    @Test
+    public void equals_normalizedPhoneNumbers_returnsTrue() {
+        // Test phone numbers with and without + sign are equal
+        Phone phoneWithPlus = new Phone("+6591234567");
+        Phone phoneWithoutPlus = new Phone("6591234567");
+        assertTrue(phoneWithPlus.equals(phoneWithoutPlus));
+        assertTrue(phoneWithoutPlus.equals(phoneWithPlus));
+
+        // Test phone numbers with and without spaces are equal
+        Phone phoneWithSpace = new Phone("+65 91234567");
+        Phone phoneWithoutSpace = new Phone("+6591234567");
+        assertTrue(phoneWithSpace.equals(phoneWithoutSpace));
+
+        // Test all variations are equal
+        Phone phone1 = new Phone("+65 91234567");
+        Phone phone2 = new Phone("+6591234567");
+        Phone phone3 = new Phone("65 91234567");
+        Phone phone4 = new Phone("6591234567");
+
+        assertTrue(phone1.equals(phone2));
+        assertTrue(phone1.equals(phone3));
+        assertTrue(phone1.equals(phone4));
+        assertTrue(phone2.equals(phone3));
+        assertTrue(phone2.equals(phone4));
+        assertTrue(phone3.equals(phone4));
+
+        // Test country code variations
+        Phone withCountryCode = new Phone("65 12345678");
+        Phone withCountryCodeNoSpace = new Phone("6512345678");
+        assertTrue(withCountryCode.equals(withCountryCodeNoSpace));
+    }
+
+    @Test
+    public void equals_differentPhoneNumbers_returnsFalse() {
+        // Different digits should not be equal
+        Phone phone1 = new Phone("+65 91234567");
+        Phone phone2 = new Phone("+65 91234568");
+        assertFalse(phone1.equals(phone2));
+
+        // Different country codes should not be equal
+        Phone phoneSG = new Phone("+65 91234567");
+        Phone phoneUS = new Phone("+1 91234567");
+        assertFalse(phoneSG.equals(phoneUS));
+
+        // Completely different numbers
+        Phone phoneA = new Phone("12345678");
+        Phone phoneB = new Phone("87654321");
+        assertFalse(phoneA.equals(phoneB));
+    }
+
+    @Test
+    public void hashCode_normalizedPhoneNumbers_equal() {
+        // Phone numbers that are equal should have the same hash code
+        Phone phone1 = new Phone("+65 91234567");
+        Phone phone2 = new Phone("+6591234567");
+        Phone phone3 = new Phone("65 91234567");
+        Phone phone4 = new Phone("6591234567");
+
+        assertTrue(phone1.hashCode() == phone2.hashCode());
+        assertTrue(phone1.hashCode() == phone3.hashCode());
+        assertTrue(phone1.hashCode() == phone4.hashCode());
+        assertTrue(phone2.hashCode() == phone3.hashCode());
+        assertTrue(phone2.hashCode() == phone4.hashCode());
+        assertTrue(phone3.hashCode() == phone4.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentPhoneNumbers_notEqual() {
+        // Different phone numbers should (likely) have different hash codes
+        Phone phone1 = new Phone("+65 91234567");
+        Phone phone2 = new Phone("+65 91234568");
+
+        assertFalse(phone1.hashCode() == phone2.hashCode());
+    }
 }
