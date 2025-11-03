@@ -429,8 +429,9 @@ See [PDPC Advisory Guidelines for the Healthcare Sector](https://www.pdpc.gov.sg
 **Q**: Can I use CaseTrack on my personal laptop?<br>
 **A**: Only if it meets security requirements: no internet access, physical security, and access controls. Get approval from your data protection officer first.
 
-**Q**: Why is the income field mandatory?
+**Q**: Why is the income field mandatory?<br>
 **A**: The income field supports future planned features for financial aid assessment etc.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
