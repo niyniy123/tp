@@ -1139,7 +1139,7 @@ This appendix lists planned enhancements for upcoming releases.
 
 ### Difficulty Level
 
-CaseTrack presented a **moderate to high difficulty** extension of AB3. Our project transformed it into a healthcare-focused patient management system, which required significant domain adaptation and feature development beyond the original scope.
+CaseTrack presented a **moderate to high difficulty** extension of AB3. Our project transformed it into a healthcare-focused patient management system, which required significant domain adaptation.
 
 ### Challenges Faced
 
