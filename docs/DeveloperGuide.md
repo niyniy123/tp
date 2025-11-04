@@ -1132,3 +1132,32 @@ This appendix lists planned enhancements for upcoming releases.
       - Command: `note 2 t/first note t/second note t/third note` ➜ All three notes are added to patient #2's record
       - Success message: `3 notes added to patient: John Tan`
       - Single note command continues to work: `note 2 t/single note` ➜ Adds one note as before.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Effort**
+
+### Difficulty Level
+
+CaseTrack presented a **moderate to high difficulty** extension of AB3. Our project transformed it into a healthcare-focused patient management system, which required significant domain adaptation.
+
+### Challenges Faced
+
+- **Command Development**: Implementing the design for new commands required deep brainstorming and execution to ensure it works accurately.
+
+- **Complex Validation Implementation**: Developing extensive validation for healthcare-specific fields such as income, phone number normalization required extensive testing and multiple iterations to balance user-friendliness with data integrity.
+
+
+### Effort Required
+
+- **Refactoring**: We refactored AB3's contact management system to a healthcare-focused patient management system. This involved renaming classes, updating terminology throughout the codebase, and adapting the data model to include healthcare-specific fields (income, medical information).
+
+- **Command Development**: We developed extra commands surrounding patient notes, including `note` (add), `edit note` (edit), and `delete note` (delete). Additionally, we implemented the `view` command for detailed patient information display and enhanced the `search` command with multiple search types (name, phone, email, tag). Each command required careful design of parsers, validators, and command classes.
+
+- **UI**: Revamped UI to include a detail panel to show patient information, including notes, medical information, focusing on UI layout, information presentation, and ensuring smooth integration with the existing architecture.
+
+- **Testing**: We implemented robust test cases to ensure each command is properly tested, including unit tests for individual components, integration tests for command workflows.
+
+### Achievements
+
+We have successfully expanded AB3 functionality to create CaseTrack, a specialized healthcare patient management system. Our key achievements include improving the UI to ensure seamless information display, creating note specific commands and designing well-rounded test cases
