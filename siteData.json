@@ -60,6 +60,7 @@
         "user-stories": "User stories",
         "use-cases": "Use cases",
         "non-functional-requirements": "Non-Functional Requirements",
+        "security-and-privacy-considerations": "Security and Privacy Considerations",
         "glossary": "Glossary",
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
@@ -71,7 +72,13 @@
         "viewing-patient-details": "Viewing patient details",
         "editing-patient-income": "Editing patient income",
         "editing-patient-medical-information": "Editing patient medical information",
-        "saving-data": "Saving data"
+        "saving-data": "Saving data",
+        "appendix-planned-enhancements": "Appendix: Planned Enhancements",
+        "appendix-effort": "Appendix: Effort",
+        "difficulty-level": "Difficulty Level",
+        "challenges-faced": "Challenges Faced",
+        "effort-required": "Effort Required",
+        "achievements": "Achievements"
       },
       "headingKeywords": {}
     },
@@ -123,7 +130,7 @@
         "adding-a-patient-add": "Adding a patient: add",
         "listing-all-patients-list": "Listing all patients : list",
         "editing-a-patient-edit-patient": "Editing a patient : edit patient",
-        "locating-persons-search": "Locating persons: search",
+        "locating-patients-search": "Locating patients: search",
         "deleting-a-patient-delete-patient": "Deleting a patient : delete patient",
         "viewing-a-patient-s-information-view": "Viewing a patient's information : view",
         "adding-a-note-note": "Adding a note : note",
@@ -133,6 +140,7 @@
         "exiting-the-program-exit": "Exiting the program : exit",
         "saving-the-data": "Saving the data",
         "editing-the-data-file": "Editing the data file",
+        "data-security-and-privacy": "Data security and privacy",
         "faq": "FAQ",
         "known-issues": "Known issues",
         "command-summary": "Command summary"
